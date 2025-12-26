@@ -12,7 +12,10 @@ import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { RouteErrorBoundary } from '@/components/RouteErrorBoundary';
 import '@/index.css'
 import { HomePage } from '@/pages/HomePage'
-import { WorkPage } from '@/pages/WorkPage'
+import { BlogPage } from '@/pages/BlogPage'
+import { MarketPage } from '@/pages/MarketPage'
+import { BlogDetailPage } from '@/pages/BlogDetailPage'
+import { MarketDetailPage } from '@/pages/MarketDetailPage'
 import { ContactPage } from '@/pages/ContactPage'
 import { AuthPage } from '@/pages/AuthPage'
 import { Toaster } from '@/components/ui/sonner'
@@ -25,12 +28,22 @@ const router = createBrowserRouter([
   },
   {
     path: "/blog",
-    element: <WorkPage />, // Placeholder for Phase 1
+    element: <BlogPage />,
+    errorElement: <RouteErrorBoundary />,
+  },
+  {
+    path: "/blog/:id",
+    element: <BlogDetailPage />,
     errorElement: <RouteErrorBoundary />,
   },
   {
     path: "/market",
-    element: <WorkPage />, // Placeholder for Phase 1
+    element: <MarketPage />,
+    errorElement: <RouteErrorBoundary />,
+  },
+  {
+    path: "/market/:id",
+    element: <MarketDetailPage />,
     errorElement: <RouteErrorBoundary />,
   },
   {
@@ -45,12 +58,12 @@ const router = createBrowserRouter([
   },
   {
     path: "/panel",
-    element: <HomePage />, // Placeholder
+    element: <HomePage />, // Placeholder for Phase 3
     errorElement: <RouteErrorBoundary />,
   },
   {
     path: "/admin",
-    element: <HomePage />, // Placeholder
+    element: <HomePage />, // Placeholder for Phase 3
     errorElement: <RouteErrorBoundary />,
   },
 ]);
