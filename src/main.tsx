@@ -6,6 +6,7 @@ import { createRoot } from 'react-dom/client'
 import {
   createBrowserRouter,
   RouterProvider,
+  Navigate,
 } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
@@ -21,11 +22,13 @@ import { AuthPage } from '@/pages/AuthPage'
 import { DashboardPage } from '@/pages/DashboardPage'
 import { AdminPage } from '@/pages/AdminPage'
 import { ServicesPage } from '@/pages/ServicesPage'
+import { AboutPage } from '@/pages/AboutPage'
 import { Toaster } from '@/components/ui/sonner'
 import { ThemeProvider } from '@/components/layout/ThemeProvider';
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   { path: "/", element: <HomePage />, errorElement: <RouteErrorBoundary /> },
+  { path: "/hakkinda", element: <AboutPage />, errorElement: <RouteErrorBoundary /> },
   { path: "/blog", element: <BlogPage />, errorElement: <RouteErrorBoundary /> },
   { path: "/blog/:id", element: <BlogDetailPage />, errorElement: <RouteErrorBoundary /> },
   { path: "/market", element: <MarketPage />, errorElement: <RouteErrorBoundary /> },

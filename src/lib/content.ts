@@ -8,6 +8,8 @@ export interface Makale {
   resim: string;
   okumaSuresi: string;
   githubRepo?: string;
+  yazar: string;
+  okunma: string;
 }
 export interface Urun {
   id: string;
@@ -43,62 +45,154 @@ export interface SidebarCategory {
   isNew?: boolean;
   isSecure?: boolean;
 }
-export const kategorilerSidebar: SidebarCategory[] = [
-  { ad: "Yazılım", iconName: "Code", isHot: true },
-  { ad: "Sunucu", iconName: "Server", isSecure: true },
-  { ad: "SEO", iconName: "TrendingUp", isNew: true },
-  { ad: "AI Kaynak", iconName: "Brain" },
-  { ad: "Diğer", iconName: "Layers", isHot: true },
-];
+export const profile = {
+  name: "Burak Beji",
+  role: "Full Stack Developer",
+  avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&h=200&auto=format&fit=crop",
+  bio: "Modern web teknolojileri üzerine uzmanlaşmış, minimalist tasarım ve performans odaklı geliştirmeler yapan bir yazılım geliştiriciyim. Laravel, React ve Node.js ekosistemlerinde 5+ yıllık deneyime sahibim.",
+  location: "İstanbul, TR",
+  status: "SYSTEM READY",
+  stacks: {
+    backend: ["Laravel", "Node.js", "Docker", "AWS", "DigitalOcean"],
+    frontend: ["Next.js", "React", "Tailwind CSS", "TypeScript"],
+    database: ["MySQL", "PostgreSQL", "Redis", "MongoDB"],
+    os: ["Ubuntu Server", "Windows Pro", "MacOS"]
+  }
+};
 export const siteAyarlari = {
   baslik: "Lumina",
   slogan: "GELECEĞİ KODLA, FİKİRLERİ PAYLAŞ",
-  hakkimda: "Lumina, modern web teknolojileri ve minimalist tasarım anlayışını birleştiren bir dijital platformdur. Yazılım dünyasındaki gelişmeleri en güncel haliyle sunar.",
+  hakkimda: "Lumina, Burak Beji tarafından modern web teknolojileri ve minimalist tasarım anlayışıyla hayata geçirilmiş bir dijital platformdur.",
   email: "iletisim@lumina.blog",
   sosyalMedya: [
-    { ad: "Twitter", link: "#", url: "https://twitter.com" },
-    { ad: "GitHub", link: "#", url: "https://github.com" },
-    { ad: "LinkedIn", link: "#", url: "https://linkedin.com" }
+    { ad: "Twitter", url: "https://twitter.com" },
+    { ad: "GitHub", url: "https://github.com" },
+    { ad: "LinkedIn", url: "https://linkedin.com" }
   ],
   istatistikler: {
     ziyaretci: "128K+",
     satis: "1.4K+",
-    makale: "240+",
+    makale: "9",
     uye: "5.2K+"
   }
 };
+export const kategorilerSidebar: SidebarCategory[] = [
+  { ad: "React", iconName: "Code", isHot: true },
+  { ad: "PHP", iconName: "Server", isSecure: true },
+  { ad: "Laravel", iconName: "TrendingUp", isNew: true },
+  { ad: "CSS", iconName: "Layers" },
+  { ad: "Wordpress", iconName: "Brain" },
+];
 export const makaleler: Makale[] = [
   {
     id: "m1",
     baslik: "React 19 ile Gelen Yenilikler",
-    kategori: "Yazılım",
+    kategori: "React",
     ozet: "React'in yeni sürümüyle gelen Compiler ve Actions gibi devrim niteliğindeki özellikleri inceliyoruz.",
     icerik: "React 19, geliştirici deneyimini kökten değiştirecek yeniliklerle geliyor...",
     tarih: "14 May 2024",
     resim: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=800&auto=format&fit=crop",
     okumaSuresi: "8 dk",
-    githubRepo: "facebook/react"
+    githubRepo: "facebook/react",
+    yazar: "Burak Beji",
+    okunma: "1.2K"
   },
   {
     id: "m2",
-    baslik: "Minimalist Çalışma Alanı Tasarımı",
-    kategori: "Yaşam",
-    ozet: "Üretkenliği artıran, karmaşadan uzak bir çalışma ortamı hazırlamanın püf noktaları.",
-    icerik: "Minimalizm sadece bir dekorasyon stili değil, aynı zamanda bir zihin durumudur...",
-    tarih: "10 May 2024",
-    resim: "https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?q=80&w=800&auto=format&fit=crop",
-    okumaSuresi: "5 dk"
+    baslik: "Tailwind CSS v4 Roadmap",
+    kategori: "CSS",
+    ozet: "Tailwind CSS'in dördüncü sürümünde bizi bekleyen performans iyileştirmeleri ve yeni motor.",
+    icerik: "Tailwind v4 tamamen sıfırdan yazılmış bir engine ile geliyor...",
+    tarih: "12 May 2024",
+    resim: "https://images.unsplash.com/photo-1587620962725-abab7fe55159?q=80&w=800&auto=format&fit=crop",
+    okumaSuresi: "5 dk",
+    yazar: "Burak Beji",
+    okunma: "842"
   },
   {
     id: "m3",
-    baslik: "TypeScript'te Advanced Types",
-    kategori: "Yazılım",
-    ozet: "Mapped types, conditional types ve infer anahtar kelimesi ile tip güvenliğini en üst düzeye çıkarın.",
-    icerik: "TypeScript dünyasında derinleşmek istiyorsanız Mapped Types konularına hakim olmalısınız...",
-    tarih: "08 May 2024",
-    resim: "https://images.unsplash.com/photo-1516116216624-53e697fedbea?q=80&w=800&auto=format&fit=crop",
+    baslik: "Laravel 11 Reverb Nedir?",
+    kategori: "Laravel",
+    ozet: "Laravel'in yeni gerçek zamanlı websocket sunucusu Reverb'ün kurulumu ve kullanımı.",
+    icerik: "Reverb, Laravel ekosistemine dahil edilen en heyecan verici özelliklerden biri...",
+    tarih: "10 May 2024",
+    resim: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop",
     okumaSuresi: "12 dk",
-    githubRepo: "microsoft/typescript"
+    githubRepo: "laravel/reverb",
+    yazar: "Burak Beji",
+    okunma: "2.1K"
+  },
+  {
+    id: "m4",
+    baslik: "PHP 8.3 Yeni Özellikleri",
+    kategori: "PHP",
+    ozet: "Typed constants ve dynamic class constant fetch gibi PHP 8.3 ile gelen kritik yenilikler.",
+    icerik: "PHP her geçen gün daha tip-güvenli bir dil haline geliyor...",
+    tarih: "08 May 2024",
+    resim: "https://images.unsplash.com/photo-1599507593499-a3f7d7d97667?q=80&w=800&auto=format&fit=crop",
+    okumaSuresi: "6 dk",
+    yazar: "Burak Beji",
+    okunma: "650"
+  },
+  {
+    id: "m5",
+    baslik: "Wordpress Headless Kullanımı",
+    kategori: "Wordpress",
+    ozet: "Wordpress'i backend olarak kullanıp Next.js ile frontend geliştirme süreci.",
+    icerik: "Geleneksel CMS yapısından kurtulup modern bir yapı kurmak mümkün...",
+    tarih: "05 May 2024",
+    resim: "https://images.unsplash.com/photo-1614741118887-7a4ee193a5fa?q=80&w=800&auto=format&fit=crop",
+    okumaSuresi: "10 dk",
+    yazar: "Burak Beji",
+    okunma: "430"
+  },
+  {
+    id: "m6",
+    baslik: "Vue 3 Composition API İpu��ları",
+    kategori: "Vue",
+    ozet: "Vue 3 ile daha temiz ve sürdürülebilir kod yazmanın incelikleri.",
+    icerik: "Composition API, Vue dünyasında devrim yarattı...",
+    tarih: "02 May 2024",
+    resim: "https://images.unsplash.com/photo-1618477247222-acbdb0e159b3?q=80&w=800&auto=format&fit=crop",
+    okumaSuresi: "7 dk",
+    yazar: "Burak Beji",
+    okunma: "520"
+  },
+  {
+    id: "m7",
+    baslik: "Temiz Kod Yazma Sanatı",
+    kategori: "Kod",
+    ozet: "Kod karmaşasından kurtulup okunabilirliği artıran temel prensipler.",
+    icerik: "Kod bir kez yazılır ama bin kez okunur...",
+    tarih: "01 May 2024",
+    resim: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=800&auto=format&fit=crop",
+    okumaSuresi: "15 dk",
+    yazar: "Burak Beji",
+    okunma: "3.4K"
+  },
+  {
+    id: "m8",
+    baslik: "Full Stack Geliştirici Olmak",
+    kategori: "Kod",
+    ozet: "2024 yılında bir full stack developer yol haritası.",
+    icerik: "Nereden başlamalı ve hangi teknolojilere odaklanmalı?",
+    tarih: "28 Apr 2024",
+    resim: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=800&auto=format&fit=crop",
+    okumaSuresi: "11 dk",
+    yazar: "Burak Beji",
+    okunma: "1.8K"
+  },
+  {
+    id: "m9",
+    baslik: "Docker ve Microservices",
+    kategori: "Kod",
+    ozet: "Konteyner teknolojisi ile ölçeklenebilir uygulamalar geliştirmek.",
+    icerik: "Docker neden modern yazılımın vazgeçilmezi?",
+    tarih: "25 Apr 2024",
+    resim: "https://images.unsplash.com/photo-1605745341112-85968b193ef5?q=80&w=800&auto=format&fit=crop",
+    okumaSuresi: "9 dk",
+    yazar: "Burak Beji",
+    okunma: "1.1K"
   }
 ];
 export const urunler: Urun[] = [
@@ -124,7 +218,7 @@ export const pricingTiers: PricingTier[] = [
   { id: "p3", ad: "Kurumsal", fiyat: "25.000+ ₺", ozellikler: ["Sınırsız Sayfa", "Özel Entegrasyonlar", "Yıllık Bakım", "Dedicated Sunucu", "VIP Danışmanlık"] }
 ];
 export const isSureci: ProcessStep[] = [
-  { title: "Analiz", desc: "��htiyaçlarınızı belirliyoruz ve yol haritasını çiziyoruz." },
+  { title: "Analiz", desc: "İhtiyaçlarınızı belirliyoruz ve yol haritasını çiziyoruz." },
   { title: "Tasarım", desc: "Kullanıcı odaklı, modern arayüzler tasarlıyoruz." },
   { title: "Geliştirme", desc: "En güncel teknolojilerle kodlama sürecini başlatıyoruz." },
   { title: "Yayım", desc: "Test süreçlerini tamamlayıp projenizi yayına alıyoruz." }

@@ -1,10 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useSettings } from '@/lib/settings-store';
+import { Link } from 'react-router-dom';
 import {
   LayoutDashboard, Settings, User, FileText, ShoppingCart,
   Database, Image, Brain, Globe, MessageSquare, Menu as MenuIcon,
-  Trash2, Save, Cloud, Search, Wrench, Sparkles
+  Trash2, Save, Cloud, Search, Wrench, Sparkles, LogOut, ArrowLeft
 } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from '@/components/ui/input';
@@ -55,15 +56,32 @@ export function AdminPage() {
               {item.label}
             </button>
           ))}
+          <div className="pt-8 mt-8 border-t border-primary/10">
+            <Link 
+              to="/" 
+              className="w-full flex items-center gap-3 px-4 py-3 text-[11px] font-black uppercase tracking-widest text-primary hover:bg-primary/10 transition-all"
+            >
+              <ArrowLeft size={16} />
+              SİTEYE DÖN
+            </Link>
+          </div>
         </nav>
       </aside>
       {/* Main Content */}
       <main className="flex-1 p-12 overflow-y-auto">
         <div className="max-w-4xl mx-auto">
           <div className="flex justify-between items-center mb-10">
-            <h1 className="text-4xl font-black uppercase tracking-tighter text-glow">Site Ayarları</h1>
-            <div className="flex items-center gap-2 bg-primary/10 border border-primary/20 px-3 py-1 text-[10px] font-black text-primary uppercase tracking-widest">
-              <Sparkles size={12} /> Live Preview Aktif
+            <div className="space-y-1">
+               <h1 className="text-4xl font-black uppercase tracking-tighter text-glow">Site Ayarları</h1>
+               <p className="text-[10px] text-muted-foreground font-black uppercase tracking-widest">YÖNETİCİ OTURUMU AKTİF</p>
+            </div>
+            <div className="flex items-center gap-4">
+               <div className="flex items-center gap-2 bg-primary/10 border border-primary/20 px-3 py-1 text-[10px] font-black text-primary uppercase tracking-widest">
+                <Sparkles size={12} /> Live Preview Aktif
+              </div>
+              <Button asChild variant="outline" className="h-10 border-primary/20 hover:bg-primary/10 text-primary">
+                <Link to="/"><LogOut size={16} className="mr-2" /> ÇIKIŞ</Link>
+              </Button>
             </div>
           </div>
           <Tabs defaultValue="appearance" className="space-y-10">

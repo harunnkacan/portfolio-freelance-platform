@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, User, LogOut, Shield, Search } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
+import { Menu, X, User, LogOut, Shield, Search, Terminal } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/lib/auth';
 import { Button } from '@/components/ui/button';
@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 const navLinks = [
   { name: 'Anasayfa', path: '/' },
+  { name: 'Hakkımda', path: '/hakkinda' },
   { name: 'Hizmetler', path: '/services' },
   { name: 'Makaleler', path: '/blog' },
   { name: 'Market', path: '/market' },
@@ -23,21 +24,28 @@ const navLinks = [
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchParams] = useSearchParams();
   const location = useLocation();
   const user = useAuth((s) => s.user);
   const logout = useAuth((s) => s.logout);
   const isAuthenticated = useAuth((s) => s.isAuthenticated);
+  const isAdminMode = searchParams.get('mode') === 'admin';
   const isActive = (path: string) => {
     if (path === '/') return location.pathname === '/';
     return location.pathname.startsWith(path);
   };
   return (
     <>
+      {isAdminMode && (
+        <div className="bg-primary text-white text-[10px] font-black uppercase tracking-[0.3em] py-2 text-center animate-pulse">
+          <Terminal size={12} className="inline mr-2" /> ADMIN MODU AKTİF • <Link to="/" className="underline hover:text-black">KULLANICI MODUNA DÖN</Link>
+        </div>
+      )}
       <nav className="sticky top-0 z-50 w-full border-b border-primary/20 bg-background/80 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center">
-              <Link to="/" className="text-2xl font-black tracking-tighter uppercase text-primary text-glow">
+              <Link to={isAdminMode ? "/?mode=admin" : "/"} className="text-2xl font-black tracking-tighter uppercase text-primary text-glow">
                 LUMINA
               </Link>
             </div>
@@ -46,7 +54,7 @@ export function Navbar() {
                 {navLinks.map((link) => (
                   <Link
                     key={link.name}
-                    to={link.path}
+                    to={isAdminMode ? `${link.path}?mode=admin` : link.path}
                     className={cn(
                       "text-[11px] font-black uppercase tracking-widest transition-all hover:text-primary",
                       isActive(link.path) ? "text-primary" : "text-muted-foreground"
@@ -76,7 +84,7 @@ export function Navbar() {
                         <Link to="/panel" className="cursor-pointer text-xs font-bold uppercase py-3">Üye Paneli</Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem asChild>
-                        <Link to="/admin" className="cursor-pointer flex items-center gap-2 text-xs font-bold uppercase py-3">
+                        <Link to="/admin?mode=admin" className="cursor-pointer flex items-center gap-2 text-xs font-bold uppercase py-3">
                           <Shield size={14} className="text-primary" /> Admin Panel
                         </Link>
                       </DropdownMenuItem>
@@ -111,6 +119,24 @@ export function Navbar() {
             </div>
           </div>
         </div>
+        {/* Mobile Menu */}
+        {isOpen && (
+          <div className="md:hidden glass-red border-x-0 border-b border-primary/20 py-4 px-4 space-y-4">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                to={isAdminMode ? `${link.path}?mode=admin` : link.path}
+                onClick={() => setIsOpen(false)}
+                className={cn(
+                  "block text-[11px] font-black uppercase tracking-widest",
+                  isActive(link.path) ? "text-primary" : "text-muted-foreground"
+                )}
+              >
+                {link.name}
+              </Link>
+            ))}
+          </div>
+        )}
       </nav>
       <SearchOverlay isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
     </>
