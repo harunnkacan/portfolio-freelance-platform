@@ -1,16 +1,15 @@
 import React from 'react';
-import { 
-  LayoutDashboard, PlusSquare, ShoppingBag, CreditCard, 
-  Ticket, FileText, FolderTree, MessageSquare, 
+import {
+  LayoutDashboard, PlusSquare, ShoppingBag, CreditCard,
+  Ticket, FileText, FolderTree, MessageSquare,
   Settings, Brain, Shield, ArrowLeft, Terminal
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 interface MenuItem {
   id: string;
   label: string;
   icon: React.ElementType;
-  path: string;
 }
 interface MenuGroup {
   label: string;
@@ -20,32 +19,32 @@ const menuGroups: MenuGroup[] = [
   {
     label: 'GENEL',
     items: [
-      { id: 'dashboard', label: 'Yönetim Paneli', icon: LayoutDashboard, path: '/admin' },
-      { id: 'new', label: 'Yeni Ekle', icon: PlusSquare, path: '/admin/new' },
+      { id: 'dashboard', label: 'Yönetim Paneli', icon: LayoutDashboard },
+      { id: 'new', label: 'Yeni Ekle', icon: PlusSquare },
     ]
   },
   {
     label: 'MAĞAZA',
     items: [
-      { id: 'products', label: 'Ür��nler', icon: ShoppingBag, path: '/admin?tab=market&sub=products' },
-      { id: 'orders', label: 'Siparişler', icon: CreditCard, path: '/admin?tab=market&sub=orders' },
-      { id: 'coupons', label: 'Kuponlar', icon: Ticket, path: '/admin?tab=market&sub=coupons' },
+      { id: 'market', label: 'Ürünler', icon: ShoppingBag },
+      { id: 'orders', label: 'Siparişler', icon: CreditCard },
+      { id: 'coupons', label: 'Kuponlar', icon: Ticket },
     ]
   },
   {
     label: 'İÇERİK',
     items: [
-      { id: 'posts', label: 'Makaleler', icon: FileText, path: '/admin?tab=posts' },
-      { id: 'categories', label: 'Kategoriler', icon: FolderTree, path: '/admin?tab=categories' },
-      { id: 'comments', label: 'Yorumlar', icon: MessageSquare, path: '/admin?tab=comments' },
+      { id: 'posts', label: 'Makaleler', icon: FileText },
+      { id: 'categories', label: 'Kategoriler', icon: FolderTree },
+      { id: 'comments', label: 'Yorumlar', icon: MessageSquare },
     ]
   },
   {
     label: 'SİSTEM',
     items: [
-      { id: 'settings', label: 'Site Ayarları', icon: Settings, path: '/admin?tab=settings' },
-      { id: 'ai', label: 'AI Asistan', icon: Brain, path: '/admin?tab=ai' },
-      { id: 'security', label: 'Güvenlik', icon: Shield, path: '/admin?tab=security' },
+      { id: 'settings', label: 'Site Ayarları', icon: Settings },
+      { id: 'ai', label: 'AI Asistan', icon: Brain },
+      { id: 'security', label: 'Güvenlik', icon: Shield },
     ]
   }
 ];
@@ -54,7 +53,6 @@ interface AdminSidebarProps {
   onTabChange: (id: string) => void;
 }
 export function AdminSidebar({ activeTab, onTabChange }: AdminSidebarProps) {
-  const location = useLocation();
   return (
     <aside className="w-72 border-r border-primary/20 bg-black/90 backdrop-blur-xl h-screen sticky top-0 flex flex-col shrink-0">
       <div className="p-8 border-b border-primary/20">
@@ -81,8 +79,8 @@ export function AdminSidebar({ activeTab, onTabChange }: AdminSidebarProps) {
                   onClick={() => onTabChange(item.id)}
                   className={cn(
                     "w-full flex items-center gap-3 px-4 py-3 text-[11px] font-black uppercase tracking-widest transition-all group relative overflow-hidden",
-                    activeTab === item.id 
-                      ? "text-primary bg-primary/5" 
+                    activeTab === item.id
+                      ? "text-primary bg-primary/5"
                       : "text-muted-foreground hover:text-primary hover:bg-primary/5"
                   )}
                 >
@@ -98,8 +96,8 @@ export function AdminSidebar({ activeTab, onTabChange }: AdminSidebarProps) {
         ))}
       </div>
       <div className="p-6 border-t border-primary/20">
-        <Link 
-          to="/" 
+        <Link
+          to="/"
           className="flex items-center justify-center gap-3 w-full bg-white/5 border border-white/10 h-12 text-[10px] font-black uppercase tracking-widest text-white hover:bg-primary hover:text-white hover:border-primary transition-all shadow-lg hover:shadow-glow"
         >
           <ArrowLeft size={14} />
