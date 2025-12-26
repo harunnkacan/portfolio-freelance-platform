@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navbar } from './Navbar';
 import { siteAyarlari } from '@/lib/content';
+import { Mail, Send, Github, Twitter, Linkedin } from 'lucide-react';
 interface SiteLayoutProps {
   children: React.ReactNode;
 }
@@ -11,44 +12,52 @@ export function SiteLayout({ children }: SiteLayoutProps) {
       <main className="flex-1">
         {children}
       </main>
-      <footer className="border-t border-primary/10 py-16 bg-black/60 backdrop-blur-sm">
+      <footer className="border-t border-primary/20 bg-black/80 backdrop-blur-md py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
-            <div className="space-y-4">
-              <span className="text-2xl font-black tracking-tighter uppercase text-primary text-glow">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+            <div className="lg:col-span-2 space-y-6">
+              <span className="text-3xl font-black tracking-tighter uppercase text-primary text-glow">
                 {siteAyarlari.baslik}
               </span>
-              <p className="text-sm text-muted-foreground max-w-xs">
-                {siteAyarlari.hakkimda}
-              </p>
-              <p className="text-xs text-muted-foreground/60 font-mono">
-                © {new Date().getFullYear()} {siteAyarlari.baslik}. Tüm hakları saklıdır.
+              <p className="text-sm text-muted-foreground leading-relaxed max-w-sm font-medium uppercase italic">
+                {siteAyarlari.hakkimda} <br />
+                <span className="text-primary font-black mt-2 block">— Burak Beji</span>
               </p>
             </div>
-            <div className="flex flex-col sm:flex-row gap-8 sm:gap-16">
-              <div>
-                <h4 className="text-xs font-black uppercase tracking-widest text-primary mb-4">Navigasyon</h4>
-                <ul className="space-y-2 text-sm text-muted-foreground">
-                  <li><a href="/" className="hover:text-primary transition-colors">Anasayfa</a></li>
-                  <li><a href="/blog" className="hover:text-primary transition-colors">Makaleler</a></li>
-                  <li><a href="/market" className="hover:text-primary transition-colors">Mağaza</a></li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="text-xs font-black uppercase tracking-widest text-primary mb-4">Sosyal Medya</h4>
-                <div className="flex gap-4">
+            <div className="space-y-6">
+              <h4 className="text-xs font-black uppercase tracking-widest text-primary">İletişim & Sosyal</h4>
+              <ul className="space-y-4">
+                <li>
+                  <a href={`mailto:${siteAyarlari.email}`} className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-3">
+                    <Mail size={16} /> {siteAyarlari.email}
+                  </a>
+                </li>
+                <li className="flex gap-4">
                   {siteAyarlari.sosyalMedya.map((social) => (
                     <a
                       key={social.ad}
                       href={social.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                      className="text-muted-foreground hover:text-primary transition-all hover:scale-110"
                     >
-                      {social.ad}
+                      {social.ad === 'GitHub' && <Github size={20} />}
+                      {social.ad === 'Twitter' && <Twitter size={20} />}
+                      {social.ad === 'LinkedIn' && <Linkedin size={20} />}
                     </a>
                   ))}
-                </div>
+                </li>
+              </ul>
+            </div>
+            <div className="space-y-6">
+              <h4 className="text-xs font-black uppercase tracking-widest text-primary">Hızlı Menü</h4>
+              <div className="flex flex-col gap-3">
+                <a href="/contact" className="text-sm font-black uppercase tracking-widest text-white hover:text-primary flex items-center gap-2 group">
+                   MESAJ GÖNDER <Send size={14} className="group-hover:translate-x-1 transition-transform" />
+                </a>
+                <p className="text-[10px] text-muted-foreground uppercase font-bold mt-4">
+                  © {new Date().getFullYear()} {siteAyarlari.baslik}. TÜM HAKLARI SAKLIDIR.
+                </p>
               </div>
             </div>
           </div>

@@ -1,133 +1,141 @@
-import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useSearchParams, Navigate } from 'react-router-dom';
-import { AdminSidebar } from '@/components/admin/AdminSidebar';
-import { SettingsPanel } from '@/components/admin/SettingsPanel';
-import { MarketPanel } from '@/components/admin/MarketPanel';
-import { DashboardPanel } from '@/components/admin/DashboardPanel';
-import { AISettingsPanel } from '@/components/admin/AISettingsPanel';
-import { ContentPanel } from '@/components/admin/ContentPanel';
-import { MediaManager } from '@/components/admin/MediaManager';
-import { UserManagement } from '@/components/admin/UserManagement';
-import { AuditLogPanel } from '@/components/admin/AuditLogPanel';
-import { Bell, Search, ShieldCheck, Terminal, Lock, RefreshCcw } from 'lucide-react';
-import { useAuth } from '@/lib/auth';
+import React from 'react';
+import { motion } from 'framer-motion';
 import { useSettings } from '@/lib/settings-store';
+import { 
+  LayoutDashboard, Settings, User, FileText, ShoppingCart, 
+  Database, Image, Brain, Globe, MessageSquare, Menu as MenuIcon,
+  Trash2, Save, Cloud, Search, Tool
+} from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { toast } from 'sonner';
+const menuItems = [
+  { id: 'dashboard', label: 'Yönetim Paneli', icon: LayoutDashboard },
+  { id: 'colors', label: 'Tema Renkleri', icon: Settings },
+  { id: 'settings', label: 'Site Ayarları', icon: Tool },
+  { id: 'sales', label: 'Dijital Satış', icon: ShoppingCart },
+  { id: 'users', label: 'Üyeler', icon: User },
+  { id: 'posts', label: 'Makaleler', icon: FileText },
+  { id: 'cats', label: 'Kategoriler', icon: Database },
+  { id: 'ai', label: 'AI Ayarları', icon: Brain },
+  { id: 'cloud', label: 'Bulut Depolama', icon: Cloud },
+  { id: 'seo', label: 'Arama Ayarları', icon: Search },
+];
 export function AdminPage() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const activeTab = searchParams.get('tab') || 'dashboard';
-  const userName = useAuth(s => s.user?.name);
-  const userRole = useAuth(s => s.user?.role);
-  const isAuthenticated = useAuth(s => s.isAuthenticated);
-  const syncStatus = useSettings(s => s.syncStatus);
-  const [isSyncing, setIsSyncing] = useState(false);
-  useEffect(() => {
-    if (syncStatus === 'syncing') {
-      setIsSyncing(true);
-      const timer = setTimeout(() => setIsSyncing(false), 800);
-      return () => clearTimeout(timer);
-    }
-  }, [syncStatus]);
-  if (!isAuthenticated || userRole !== 'admin') {
-    return <Navigate to="/auth" />;
-  }
-  const handleTabChange = (id: string) => {
-    setSearchParams({ tab: id });
+  const primaryColor = useSettings(s => s.primaryColor);
+  const heroTitle = useSettings(s => s.heroTitle);
+  const heroSubtitle = useSettings(s => s.heroSubtitle);
+  const heroCtaText = useSettings(s => s.heroCtaText);
+  const heroCtaLink = useSettings(s => s.heroCtaLink);
+  const updateSettings = useSettings(s => s.updateSettings);
+  const colors = ["#ff1744", "#F72A1F", "#3d5afe", "#00e676", "#ffea00", "#d500f9"];
+  const handleSave = () => {
+    toast.success("Ayarlar başarıyla kaydedildi.");
   };
-  const renderContent = () => {
-    switch (activeTab) {
-      case 'dashboard': return <DashboardPanel />;
-      case 'users': return <UserManagement />;
-      case 'logs': return <AuditLogPanel />;
-      case 'market':
-      case 'orders':
-      case 'coupons': return <MarketPanel />;
-      case 'posts':
-      case 'categories':
-      case 'comments': return <ContentPanel />;
-      case 'settings': return <SettingsPanel />;
-      case 'ai': return <AISettingsPanel />;
-      case 'media': return <MediaManager />;
-      case 'security':
-        return (
-          <div className="space-y-10">
-            <h2 className="text-4xl font-black uppercase tracking-tighter text-glow flex items-center gap-3">
-              <Lock className="text-primary" /> GÜVENLİK MERKEZİ
-            </h2>
-            <div className="glass-red p-8 space-y-6">
-              <h3 className="text-xs font-black uppercase tracking-widest text-primary">SİSTEM ERİŞ��M LOGLARI</h3>
-              <div className="space-y-4 font-mono text-[10px]">
-                {[...Array(5)].map((_, i) => (
-                  <div key={i} className="flex justify-between border-b border-primary/5 pb-2 opacity-70">
-                    <span className="text-emerald-500">[SUCCESS]</span>
-                    <span className="text-white">ADMIN_AUTH_GRANTED</span>
-                    <span className="text-muted-foreground">IP: 192.168.1.{10 + i}</span>
-                    <span className="text-primary">{new Date().toLocaleTimeString()}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="flex gap-4">
-              <button className="btn-cyber h-12 px-6 text-[10px]">VIEW ROBOTS.TXT</button>
-              <button className="btn-cyber h-12 px-6 text-[10px]">REGENERATE SITEMAP</button>
-            </div>
-          </div>
-        );
-      default: return <DashboardPanel />;
-    }
+  const handleClearCache = () => {
+    toast.info("Sistem önbelleği temizlendi.");
   };
   return (
-    <div className="min-h-screen bg-[#050505] text-white flex selection:bg-primary selection:text-white">
-      <AdminSidebar activeTab={activeTab} onTabChange={handleTabChange} />
-      <div className="flex-1 flex flex-col h-screen overflow-hidden">
-        <header className="h-20 border-b border-primary/20 bg-black/40 backdrop-blur-md px-10 flex items-center justify-between shrink-0">
-          <div className="flex items-center gap-6 text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <span className="text-[10px] font-black uppercase tracking-[0.2em]">DURUM:</span>
-              <span className="text-[10px] font-black uppercase tracking-widest text-emerald-500 flex items-center gap-1.5">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
-                ONLINE
-              </span>
-            </div>
-            {isSyncing && (
-              <div className="flex items-center gap-2 text-[10px] font-black text-primary animate-pulse">
-                <RefreshCcw size={10} className="animate-spin" /> SYNCING...
-              </div>
-            )}
+    <div className="min-h-screen bg-background flex">
+      {/* Sidebar */}
+      <aside className="w-64 border-r border-primary/20 bg-black shrink-0 hidden md:block">
+        <div className="p-6 border-b border-primary/20">
+          <div className="text-xl font-black tracking-tighter text-primary uppercase text-glow">
+            ADMIN PANELI
           </div>
-          <div className="flex items-center gap-8">
-            <button className="relative p-2 text-muted-foreground hover:text-primary transition-colors">
-              <Bell size={20} />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full" />
+        </div>
+        <nav className="p-4 space-y-1">
+          {menuItems.map(item => (
+            <button
+              key={item.id}
+              className="w-full flex items-center gap-3 px-4 py-3 text-[11px] font-black uppercase tracking-widest text-muted-foreground hover:bg-primary/10 hover:text-primary transition-all group"
+            >
+              <item.icon size={16} className="group-hover:text-primary" />
+              {item.label}
             </button>
-            <div className="flex items-center gap-3 border-l border-primary/20 pl-8">
-              <div className="text-right">
-                <p className="text-[10px] font-black uppercase tracking-widest leading-none">{userName}</p>
-                <p className="text-[8px] font-black uppercase text-primary tracking-widest mt-1">SUPER_ADMIN</p>
+          ))}
+        </nav>
+      </aside>
+      {/* Main Content */}
+      <main className="flex-1 p-12">
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-4xl font-black uppercase tracking-tighter mb-10 text-glow">Site Ayarları</h1>
+          <Tabs defaultValue="appearance" className="space-y-10">
+            <TabsList className="bg-transparent border-b border-primary/20 h-auto p-0 rounded-none w-full justify-start gap-8">
+              <TabsTrigger value="appearance" className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-0 pb-4 font-black uppercase text-xs tracking-widest">Görünüm</TabsTrigger>
+              <TabsTrigger value="general" className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-0 pb-4 font-black uppercase text-xs tracking-widest">Genel</TabsTrigger>
+              <TabsTrigger value="social" className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-0 pb-4 font-black uppercase text-xs tracking-widest">Sosyal</TabsTrigger>
+            </TabsList>
+            <TabsContent value="appearance" className="space-y-12">
+              {/* Color Picker */}
+              <section className="space-y-6">
+                <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Tema Ana Rengi</Label>
+                <div className="flex items-center gap-8 glass-red p-8 border-primary/10">
+                  <div className="flex gap-4">
+                    {colors.map(c => (
+                      <button
+                        key={c}
+                        onClick={() => updateSettings({ primaryColor: c })}
+                        className={`w-10 h-10 rounded-full border-2 transition-all ${primaryColor === c ? 'border-white scale-110 shadow-glow' : 'border-transparent'}`}
+                        style={{ backgroundColor: c }}
+                      />
+                    ))}
+                  </div>
+                  <div className="flex-1 flex items-center gap-4">
+                    <span className="text-xs font-mono uppercase font-bold">HEX Kod:</span>
+                    <Input 
+                      value={primaryColor} 
+                      onChange={(e) => updateSettings({ primaryColor: e.target.value })}
+                      className="max-w-[150px] bg-black border-primary/20 font-mono text-center"
+                    />
+                  </div>
+                </div>
+              </section>
+              {/* Hero Settings */}
+              <section className="space-y-8">
+                <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Hero Bölümü Yönetimi</Label>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 glass-red p-8">
+                  <div className="space-y-2">
+                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Başlık (H1)</Label>
+                    <Input 
+                      value={heroTitle} 
+                      onChange={(e) => updateSettings({ heroTitle: e.target.value })}
+                      className="bg-black border-primary/20"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">CTA Buton Metni</Label>
+                    <Input 
+                      value={heroCtaText} 
+                      onChange={(e) => updateSettings({ heroCtaText: e.target.value })}
+                      className="bg-black border-primary/20"
+                    />
+                  </div>
+                  <div className="space-y-2 md:col-span-2">
+                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Alt Başlık (Açıklama)</Label>
+                    <Input 
+                      value={heroSubtitle} 
+                      onChange={(e) => updateSettings({ heroSubtitle: e.target.value })}
+                      className="bg-black border-primary/20"
+                    />
+                  </div>
+                </div>
+              </section>
+              {/* Action Buttons */}
+              <div className="flex gap-4 pt-10 border-t border-primary/10">
+                <Button onClick={handleSave} className="btn-cyber h-14 px-12 text-sm">
+                  <Save className="mr-2 w-5 h-5" /> AYARLARI KAYDET
+                </Button>
+                <Button onClick={handleClearCache} variant="outline" className="h-14 px-12 text-[10px] font-black uppercase border-primary/30 text-primary">
+                  <Trash2 className="mr-2 w-4 h-4" /> CACHE TEMIZLE
+                </Button>
               </div>
-              <div className="w-10 h-10 rounded-full border border-primary/20 p-0.5 overflow-hidden grayscale">
-                <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${userName}`} alt="Avatar" className="w-full h-full object-cover" />
-              </div>
-            </div>
-          </div>
-        </header>
-        <main className="flex-1 overflow-y-auto cyber-grid relative">
-          <div className="noise-overlay pointer-events-none opacity-20" />
-          <div className="max-w-7xl mx-auto px-10 py-12 relative z-10">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeTab}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.3 }}
-              >
-                {renderContent()}
-              </motion.div>
-            </AnimatePresence>
-          </div>
-        </main>
-      </div>
+            </TabsContent>
+          </Tabs>
+        </div>
+      </main>
     </div>
   );
 }

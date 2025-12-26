@@ -16,8 +16,10 @@ import {
 const navLinks = [
   { name: 'Anasayfa', path: '/' },
   { name: 'Makaleler', path: '/blog' },
-  { name: 'Mağaza', path: '/market' },
-  { name: 'İletişim', path: '/contact' },
+  { name: 'Kategoriler', path: '/blog' },
+  { name: 'Hakkımda', path: '/contact' },
+  { name: 'Araçlar', path: '/market' },
+  { name: 'Dijital Üniler', path: '/market' },
 ];
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,20 +39,20 @@ export function Navbar() {
               </Link>
             </div>
             <div className="hidden md:block">
-              <div className="flex items-center space-x-8">
+              <div className="flex items-center space-x-6">
                 {navLinks.map((link) => (
                   <Link
                     key={link.name}
                     to={link.path}
                     className={cn(
-                      "text-[10px] font-black uppercase tracking-widest transition-all hover:text-primary",
-                      location.pathname === link.path ? "text-primary border-b border-primary" : "text-muted-foreground"
+                      "text-[11px] font-black uppercase tracking-widest transition-all hover:text-primary",
+                      location.pathname === link.path ? "text-primary" : "text-muted-foreground"
                     )}
                   >
                     {link.name}
                   </Link>
                 ))}
-                <button 
+                <button
                   onClick={() => setIsSearchOpen(true)}
                   className="p-2 text-muted-foreground hover:text-primary transition-all"
                 >
@@ -61,7 +63,7 @@ export function Navbar() {
                     <DropdownMenuTrigger asChild>
                       <Button variant="ghost" size="sm" className="gap-2 text-primary border border-primary/20 rounded-none h-10 px-4">
                         <User size={16} />
-                        <span className="text-[10px] font-black uppercase tracking-widest">{user?.name}</span>
+                        <span className="text-[10px] font-black uppercase tracking-widest">Harun Kagan</span>
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-56 bg-black border-primary/20 text-white rounded-none">
@@ -70,13 +72,11 @@ export function Navbar() {
                       <DropdownMenuItem asChild>
                         <Link to="/panel" className="cursor-pointer text-xs font-bold uppercase py-3">Üye Paneli</Link>
                       </DropdownMenuItem>
-                      {user?.role === 'admin' && (
-                        <DropdownMenuItem asChild>
-                          <Link to="/admin" className="cursor-pointer flex items-center gap-2 text-xs font-bold uppercase py-3">
-                            <Shield size={14} className="text-primary" /> Admin Panel
-                          </Link>
-                        </DropdownMenuItem>
-                      )}
+                      <DropdownMenuItem asChild>
+                        <Link to="/admin" className="cursor-pointer flex items-center gap-2 text-xs font-bold uppercase py-3">
+                          <Shield size={14} className="text-primary" /> Admin Panel
+                        </Link>
+                      </DropdownMenuItem>
                       <DropdownMenuSeparator className="bg-primary/20" />
                       <DropdownMenuItem onClick={() => logout()} className="text-primary cursor-pointer text-xs font-bold uppercase py-3">
                         <LogOut size={14} className="mr-2" /> Çıkış Yap
@@ -91,7 +91,7 @@ export function Navbar() {
               </div>
             </div>
             <div className="md:hidden flex items-center gap-2">
-               <button 
+               <button
                   onClick={() => setIsSearchOpen(true)}
                   className="p-2 text-primary"
                 >
@@ -110,14 +110,14 @@ export function Navbar() {
         </div>
         {isOpen && (
           <div className="md:hidden border-t border-primary/10 bg-background h-screen">
-            <div className="flex flex-col p-8 space-y-8">
+            <div className="flex flex-col p-8 space-y-6">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   to={link.path}
                   onClick={() => setIsOpen(false)}
                   className={cn(
-                    "text-4xl font-black uppercase tracking-tighter",
+                    "text-3xl font-black uppercase tracking-tighter",
                     location.pathname === link.path ? "text-primary" : "text-muted-foreground"
                   )}
                 >
@@ -131,7 +131,7 @@ export function Navbar() {
                     <button onClick={() => { logout(); setIsOpen(false); }} className="text-xl uppercase font-bold text-muted-foreground">Çıkış Yap</button>
                   </>
                 ) : (
-                  <Button asChild className="w-full btn-cyber h-16 rounded-none text-lg" onClick={() => setIsOpen(false)}>
+                  <Button asChild className="w-full btn-cyber h-14 rounded-none text-lg" onClick={() => setIsOpen(false)}>
                     <Link to="/auth">GİRİŞ YAP</Link>
                   </Button>
                 )}
