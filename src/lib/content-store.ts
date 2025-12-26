@@ -1,22 +1,27 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { makaleler, urunler, Makale, Urun } from './content';
+import { makaleler, urunler, kategorilerSidebar, Makale, Urun, SidebarCategory } from './content';
 import { v4 as uuidv4 } from 'uuid';
 interface ContentState {
   posts: Makale[];
   products: Urun[];
+  categories: SidebarCategory[];
   addPost: (post: Omit<Makale, 'id' | 'tarih' | 'okunma'>) => void;
   updatePost: (id: string, post: Partial<Makale>) => void;
   deletePost: (id: string) => void;
   addProduct: (product: Omit<Urun, 'id'>) => void;
   updateProduct: (id: string, product: Partial<Urun>) => void;
   deleteProduct: (id: string) => void;
+  addCategory: (category: SidebarCategory) => void;
+  updateCategory: (ad: string, category: Partial<SidebarCategory>) => void;
+  deleteCategory: (ad: string) => void;
 }
 export const useContentStore = create<ContentState>()(
   persist(
     (set) => ({
       posts: makaleler,
       products: urunler,
+      categories: kategorilerSidebar,
       addPost: (post) => set((state) => ({
         posts: [
           {
@@ -45,6 +50,15 @@ export const useContentStore = create<ContentState>()(
       })),
       deleteProduct: (id) => set((state) => ({
         products: state.products.filter((p) => p.id !== id)
+      })),
+      addCategory: (category) => set((state) => ({
+        categories: [...state.categories, category]
+      })),
+      updateCategory: (ad, updatedCat) => set((state) => ({
+        categories: state.categories.map((c) => (c.ad === ad ? { ...c, ...updatedCat } : c))
+      })),
+      deleteCategory: (ad) => set((state) => ({
+        categories: state.categories.filter((c) => c.ad !== ad)
       })),
     }),
     {

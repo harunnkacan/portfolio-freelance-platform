@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useContentStore } from '@/lib/content-store';
-import { kategorilerSidebar } from '@/lib/content';
 import { AdminBlogCard } from './AdminBlogCard';
 import { EditorModal } from './EditorModal';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -11,7 +10,10 @@ import { Search, Plus, FileText, Layers, Eye, MessageSquare, X } from 'lucide-re
 import { toast } from 'sonner';
 export function ContentPanel() {
   const posts = useContentStore(s => s.posts);
+  const categories = useContentStore(s => s.categories);
   const deletePost = useContentStore(s => s.deletePost);
+  const addCategory = useContentStore(s => s.addCategory);
+  const deleteCategory = useContentStore(s => s.deleteCategory);
   const [searchTerm, setSearchTerm] = useState('');
   const [showAddCat, setShowAddCat] = useState(false);
   const [newCatName, setNewCatName] = useState('');
@@ -21,14 +23,21 @@ export function ContentPanel() {
     { label: 'TOPLAM MAKALE', value: posts.length.toString(), icon: FileText, color: 'text-primary' },
     { label: 'TOPLAM OKUNMA', value: '12.4K', icon: Eye, color: 'text-blue-500' },
     { label: 'YORUMLAR', value: '142', icon: MessageSquare, color: 'text-emerald-500' },
-    { label: 'KATEGORİLER', value: kategorilerSidebar.length.toString(), icon: Layers, color: 'text-amber-500' },
+    { label: 'KATEGORİLER', value: categories.length.toString(), icon: Layers, color: 'text-amber-500' },
   ];
   const handleAddCat = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newCatName) return;
+    addCategory({ ad: newCatName, iconName: 'Layers' });
     toast.success(`${newCatName} kategorisi başarıyla oluşturuldu!`);
     setNewCatName('');
     setShowAddCat(false);
+  };
+  const handleDeleteCat = (ad: string) => {
+    if (window.confirm(`${ad} kategorisini silmek istediğinize emin misiniz?`)) {
+      deleteCategory(ad);
+      toast.error("Kategori silindi.");
+    }
   };
   const filteredArticles = posts.filter(m =>
     m.baslik.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -98,7 +107,7 @@ export function ContentPanel() {
             )}
           </AnimatePresence>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {kategorilerSidebar.map((kat) => (
+            {categories.map((kat) => (
               <div key={kat.ad} className="glass-red p-6 border-primary/10 flex items-center justify-between group hover:border-primary/40 transition-all">
                 <div className="flex items-center gap-4">
                   <div className="w-10 h-10 bg-primary/10 border border-primary/20 flex items-center justify-center">
@@ -109,6 +118,9 @@ export function ContentPanel() {
                     <p className="text-[10px] text-muted-foreground font-mono">ID: {kat.ad.toLowerCase()}</p>
                   </div>
                 </div>
+                <Button variant="ghost" size="icon" onClick={() => handleDeleteCat(kat.ad)} className="text-muted-foreground hover:text-red-500">
+                  <X size={14}/>
+                </Button>
               </div>
             ))}
             <button onClick={() => setShowAddCat(true)} className="border-2 border-dashed border-primary/20 p-6 flex items-center justify-center gap-3 hover:bg-primary/5 hover:border-primary/40 transition-all group">

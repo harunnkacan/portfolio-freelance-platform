@@ -1,5 +1,4 @@
 import React from 'react';
-import { SiteLayout } from '@/components/layout/SiteLayout';
 import { motion } from 'framer-motion';
 import { useAuth } from '@/lib/auth';
 import { useNavigate } from 'react-router-dom';
@@ -15,7 +14,6 @@ export function AuthPage() {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
     const email = formData.get('email') as string;
-    // Mock admin logic
     const role = email === 'admin@lumina.blog' ? 'admin' : 'user';
     login(email, role);
     toast.success(`Hoş geldin, ${email.split('@')[0]}!`);
@@ -26,8 +24,8 @@ export function AuthPage() {
     toast.success("Kayıt başarılı! Lütfen giriş yapın.");
   };
   return (
-    <SiteLayout>
-      <div className="min-h-[80vh] cyber-grid flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="min-h-[80vh] cyber-grid flex items-center justify-center py-12">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -78,6 +76,6 @@ export function AuthPage() {
           </Tabs>
         </motion.div>
       </div>
-    </SiteLayout>
+    </div>
   );
 }
