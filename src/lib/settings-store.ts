@@ -13,15 +13,11 @@ export const useSettings = create<SettingsState>()(
     (set) => ({
       primaryColor: '#ff1744',
       heroTitle: 'GELECEĞİ KODLA, FİKİRLERİ PAYLAŞ',
-      heroSubtitle: 'Dijital evrende iz bırak��n. Yazılım, tasarım ve gelecek burada buluşuyor.',
+      heroSubtitle: 'Dijital evrende iz bırakın. Yazılım, tasarım ve gelecek burada buluşuyor.',
       heroCtaText: 'MAKALELERİ OKU',
       heroCtaLink: '/blog',
       updateSettings: (newSettings) => {
         set((state) => ({ ...state, ...newSettings }));
-        if (newSettings.primaryColor) {
-          document.documentElement.style.setProperty('--primary', hexToHsl(newSettings.primaryColor));
-          document.documentElement.style.setProperty('--ring', newSettings.primaryColor);
-        }
       },
     }),
     {
@@ -30,7 +26,7 @@ export const useSettings = create<SettingsState>()(
   )
 );
 // Helper to convert HEX to HSL for Shadcn CSS variables
-function hexToHsl(hex: string): string {
+export function hexToHsl(hex: string): string {
   let r = 0, g = 0, b = 0;
   if (hex.length === 4) {
     r = parseInt(hex[1] + hex[1], 16);

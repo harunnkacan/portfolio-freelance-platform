@@ -5,10 +5,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
 export function CommentSection() {
   const [comments, setComments] = useState<any[]>([
-    { id: 1, user: 'Ahmet Y.', text: 'Harika bir yazı olmuş, özellikle compiler kısmına değinmeniz çok iyi.', date: '2 saat önce', likes: 12, approved: true },
-    { id: 2, user: 'Zeynep K.', text: 'React 19 sabırs��zlıkla bekliyoruz.', date: '5 saat önce', likes: 4, approved: true },
+    { id: 1, user: 'Ahmet Y.', text: 'Harika bir yazı olmu��, özellikle compiler kısmına değinmeniz çok iyi.', date: '2 saat önce', likes: 12, approved: true },
+    { id: 2, user: 'Zeynep K.', text: 'React 19 sabırsızlıkla bekliyoruz.', date: '5 saat önce', likes: 4, approved: true },
   ]);
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -75,7 +76,7 @@ export function CommentSection() {
               <p className="text-muted-foreground leading-relaxed mb-6 italic">"{comment.text}"</p>
               <div className="flex items-center gap-6">
                 <button className="flex items-center gap-1 text-[10px] font-black uppercase text-muted-foreground hover:text-primary transition-colors">
-                  <Heart size={14} className={comment.likes > 10 ? 'fill-primary text-primary' : ''} /> {comment.likes} Be��eni
+                  <Heart size={14} className={comment.likes > 10 ? 'fill-primary text-primary' : ''} /> {comment.likes} Beğeni
                 </button>
                 <button className="flex items-center gap-1 text-[10px] font-black uppercase text-muted-foreground hover:text-primary transition-colors">
                   <Reply size={14} /> Cevapla
@@ -87,7 +88,4 @@ export function CommentSection() {
       </div>
     </div>
   );
-}
-function cn(...inputs: any[]) {
-  return inputs.filter(Boolean).join(' ');
 }

@@ -24,6 +24,30 @@ export function ServicesPage() {
               Dijital dünyadaki varlığınızı güçlendirecek profesyonel çözümler ve esnek fiyatlandırma modelleri.
             </p>
           </div>
+          {/* Services Grid (Hizmetler) */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-40">
+            {hizmetler.map((hizmet, idx) => {
+              const Icon = iconMap[hizmet.iconName] || Briefcase;
+              return (
+                <motion.div
+                  key={hizmet.id}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.1 }}
+                  className="glass-red p-10 flex flex-col items-start gap-6 group hover:border-primary/60 transition-all"
+                >
+                  <div className="w-14 h-14 bg-primary/10 border border-primary/20 flex items-center justify-center shadow-glow group-hover:scale-110 transition-transform">
+                    <Icon className="w-7 h-7 text-primary" />
+                  </div>
+                  <h3 className="text-2xl font-black uppercase tracking-tighter leading-none">{hizmet.ad}</h3>
+                  <p className="text-sm text-muted-foreground font-medium uppercase leading-relaxed italic">
+                    {hizmet.aciklama}
+                  </p>
+                </motion.div>
+              );
+            })}
+          </div>
           {/* Pricing Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-40">
             {pricingTiers.map((tier, idx) => (
@@ -80,7 +104,7 @@ export function ServicesPage() {
              <Zap className="mx-auto w-12 h-12 text-primary mb-8 animate-pulse" />
              <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase mb-6 relative z-10">ÖZEL BİR PROJENİZ M�� VAR?</h2>
              <p className="text-muted-foreground uppercase text-sm font-bold tracking-widest mb-12 relative z-10 max-w-xl mx-auto">
-               Standart paketlerin dışında, ihtiyaçlarınıza özel çözümler için bizimle iletişime geçin. Ekibimiz en kısa sürede size d��nüş yapacaktır.
+               Standart paketlerin dışında, ihtiyaçlarınıza özel çözümler için bizimle iletişime geçin. Ekibimiz en kısa sürede size dönüş yapacaktır.
              </p>
              <Button asChild size="lg" className="btn-cyber h-16 px-12 rounded-none relative z-10">
                <Link to="/contact" className="flex items-center gap-3">ÜCRETSİZ TEKLİF AL <ArrowRight size={20} /></Link>

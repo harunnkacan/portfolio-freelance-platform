@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { AIAssistant } from '@/components/blog/AIAssistant';
 import { CommentSection } from '@/components/blog/CommentSection';
 import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
 export function BlogDetailPage() {
   const { id } = useParams();
   const [liked, setLiked] = useState(false);
@@ -19,7 +20,7 @@ export function BlogDetailPage() {
   };
   return (
     <SiteLayout>
-      <article className="min-h-screen bg-background">
+      <article className="min-h-screen bg-background text-foreground">
         <div className="relative h-[65vh] overflow-hidden">
           <img
             src={post.resim}
@@ -73,20 +74,20 @@ export function BlogDetailPage() {
                 </div>
               </motion.div>
               <div className="flex items-center gap-4 py-12 border-y border-primary/10">
-                <Button 
+                <Button
                   onClick={() => setLiked(!liked)}
-                  variant="outline" 
+                  variant="outline"
                   className={cn(
                     "rounded-none border-primary/30 h-14 px-8 font-black uppercase tracking-widest transition-all",
                     liked && "bg-primary text-white border-primary shadow-glow"
                   )}
                 >
-                  <Heart className={cn("mr-2 w-5 h-5", liked && "fill-current")} /> 
+                  <Heart className={cn("mr-2 w-5 h-5", liked && "fill-current")} />
                   {liked ? 'BEĞENİLDİ' : 'BEĞEN (124)'}
                 </Button>
-                <Button 
+                <Button
                   onClick={handleShare}
-                  variant="outline" 
+                  variant="outline"
                   className="rounded-none border-primary/30 h-14 px-8 font-black uppercase tracking-widest"
                 >
                   <Share2 className="mr-2 w-5 h-5" /> PAYLAŞ
@@ -125,7 +126,4 @@ export function BlogDetailPage() {
       </article>
     </SiteLayout>
   );
-}
-function cn(...inputs: any[]) {
-  return inputs.filter(Boolean).join(' ');
 }

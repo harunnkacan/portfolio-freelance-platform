@@ -4,7 +4,7 @@ import { useSettings } from '@/lib/settings-store';
 import {
   LayoutDashboard, Settings, User, FileText, ShoppingCart,
   Database, Image, Brain, Globe, MessageSquare, Menu as MenuIcon,
-  Trash2, Save, Cloud, Search, Wrench
+  Trash2, Save, Cloud, Search, Wrench, Sparkles
 } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from '@/components/ui/input';
@@ -28,7 +28,6 @@ export function AdminPage() {
   const heroTitle = useSettings(s => s.heroTitle);
   const heroSubtitle = useSettings(s => s.heroSubtitle);
   const heroCtaText = useSettings(s => s.heroCtaText);
-  const heroCtaLink = useSettings(s => s.heroCtaLink);
   const updateSettings = useSettings(s => s.updateSettings);
   const colors = ["#ff1744", "#F72A1F", "#3d5afe", "#00e676", "#ffea00", "#d500f9"];
   const handleSave = () => {
@@ -38,7 +37,7 @@ export function AdminPage() {
     toast.info("Sistem önbelleği temizlendi.");
   };
   return (
-    <div className="min-h-screen bg-background flex">
+    <div className="min-h-screen bg-background text-foreground flex">
       {/* Sidebar */}
       <aside className="w-64 border-r border-primary/20 bg-black shrink-0 hidden md:block">
         <div className="p-6 border-b border-primary/20">
@@ -59,9 +58,14 @@ export function AdminPage() {
         </nav>
       </aside>
       {/* Main Content */}
-      <main className="flex-1 p-12">
+      <main className="flex-1 p-12 overflow-y-auto">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl font-black uppercase tracking-tighter mb-10 text-glow">Site Ayarları</h1>
+          <div className="flex justify-between items-center mb-10">
+            <h1 className="text-4xl font-black uppercase tracking-tighter text-glow">Site Ayarları</h1>
+            <div className="flex items-center gap-2 bg-primary/10 border border-primary/20 px-3 py-1 text-[10px] font-black text-primary uppercase tracking-widest">
+              <Sparkles size={12} /> Live Preview Aktif
+            </div>
+          </div>
           <Tabs defaultValue="appearance" className="space-y-10">
             <TabsList className="bg-transparent border-b border-primary/20 h-auto p-0 rounded-none w-full justify-start gap-8">
               <TabsTrigger value="appearance" className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-0 pb-4 font-black uppercase text-xs tracking-widest">Görünüm</TabsTrigger>
@@ -129,7 +133,7 @@ export function AdminPage() {
                   <Save className="mr-2 w-5 h-5" /> AYARLARI KAYDET
                 </Button>
                 <Button onClick={handleClearCache} variant="outline" className="h-14 px-12 text-[10px] font-black uppercase border-primary/30 text-primary">
-                  <Trash2 className="mr-2 w-4 h-4" /> CACHE TEMIZLE
+                  <Trash2 className="mr-2 w-4 h-4" /> CACHE TEMİZLE
                 </Button>
               </div>
             </TabsContent>

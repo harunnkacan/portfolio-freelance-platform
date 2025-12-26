@@ -27,6 +27,10 @@ export function Navbar() {
   const user = useAuth((s) => s.user);
   const logout = useAuth((s) => s.logout);
   const isAuthenticated = useAuth((s) => s.isAuthenticated);
+  const isActive = (path: string) => {
+    if (path === '/') return location.pathname === '/';
+    return location.pathname.startsWith(path);
+  };
   return (
     <>
       <nav className="sticky top-0 z-50 w-full border-b border-primary/20 bg-background/80 backdrop-blur-md">
@@ -45,7 +49,7 @@ export function Navbar() {
                     to={link.path}
                     className={cn(
                       "text-[11px] font-black uppercase tracking-widest transition-all hover:text-primary",
-                      location.pathname === link.path ? "text-primary" : "text-muted-foreground"
+                      isActive(link.path) ? "text-primary" : "text-muted-foreground"
                     )}
                   >
                     {link.name}
