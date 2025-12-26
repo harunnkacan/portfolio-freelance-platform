@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { kategorilerSidebar } from '@/lib/content';
 import { useSettings } from '@/lib/settings-store';
 import { useContentStore } from '@/lib/content-store';
 import { Button } from '@/components/ui/button';
@@ -16,7 +15,9 @@ export function HomePage() {
   const heroSubtitle = useSettings(s => s.heroSubtitle);
   const heroCtaText = useSettings(s => s.heroCtaText);
   const heroCtaLink = useSettings(s => s.heroCtaLink);
+  // Zustand: Primitive selectors only
   const posts = useContentStore(s => s.posts);
+  const categories = useContentStore(s => s.categories);
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="flex flex-col lg:flex-row gap-12">
@@ -26,7 +27,7 @@ export function HomePage() {
             <div>
               <h3 className="text-xs font-black uppercase tracking-[0.2em] text-primary mb-6">Kategoriler</h3>
               <div className="space-y-2">
-                {kategorilerSidebar.map((kat) => {
+                {categories.map((kat) => {
                   const Icon = iconMap[kat.iconName] || Layers;
                   return (
                     <Link
@@ -39,9 +40,9 @@ export function HomePage() {
                         <span className="text-xs font-bold uppercase tracking-wide">{kat.ad}</span>
                       </div>
                       <div className="flex gap-1">
-                        {kat.isHot && <span title="Popüler">🔥</span>}
+                        {kat.isHot && <span title="Pop��ler">🔥</span>}
                         {kat.isNew && <span title="Yeni">🚀</span>}
-                        {kat.isSecure && <span title="Güvenli">🔒</span>}
+                        {kat.isSecure && <span title="G��venli">🔒</span>}
                       </div>
                     </Link>
                   );
@@ -50,7 +51,7 @@ export function HomePage() {
             </div>
             <div className="glass-red p-6 border-primary/10">
               <h4 className="text-[10px] font-black uppercase tracking-widest text-primary mb-2">Sponsorluk</h4>
-              <p className="text-xs text-muted-foreground leading-relaxed">
+              <p className="text-xs text-muted-foreground leading-relaxed font-bold italic uppercase">
                 İş birliği ve reklam için bizimle iletişime geçin.
               </p>
             </div>

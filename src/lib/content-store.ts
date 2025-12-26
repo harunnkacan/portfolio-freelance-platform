@@ -22,29 +22,44 @@ export const useContentStore = create<ContentState>()(
       posts: makaleler,
       products: urunler,
       categories: kategorilerSidebar,
-      addPost: (post) => set((state) => ({
-        posts: [
-          {
-            ...post,
-            id: uuidv4(),
-            tarih: new Date().toLocaleDateString('tr-TR', { day: '2-digit', month: 'short', year: 'numeric' }),
-            okunma: '0'
-          },
-          ...state.posts
-        ]
-      })),
+      addPost: (post) => set((state) => {
+        const slug = post.slug || post.baslik.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
+        return {
+          posts: [
+            {
+              ...post,
+              id: uuidv4(),
+              tarih: new Date().toLocaleDateString('tr-TR', { day: '2-digit', month: 'short', year: 'numeric' }),
+              okunma: '0',
+              slug,
+              metaTitle: post.metaTitle || post.baslik,
+              metaDescription: post.metaDescription || post.ozet
+            },
+            ...state.posts
+          ]
+        };
+      }),
       updatePost: (id, updatedPost) => set((state) => ({
         posts: state.posts.map((p) => (p.id === id ? { ...p, ...updatedPost } : p))
       })),
       deletePost: (id) => set((state) => ({
         posts: state.posts.filter((p) => p.id !== id)
       })),
-      addProduct: (product) => set((state) => ({
-        products: [
-          { ...product, id: uuidv4() },
-          ...state.products
-        ]
-      })),
+      addProduct: (product) => set((state) => {
+        const slug = product.slug || product.ad.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
+        return {
+          products: [
+            { 
+              ...product, 
+              id: uuidv4(),
+              slug,
+              metaTitle: product.metaTitle || product.ad,
+              metaDescription: product.metaDescription || product.aciklama
+            },
+            ...state.products
+          ]
+        };
+      }),
       updateProduct: (id, updatedProduct) => set((state) => ({
         products: state.products.map((p) => (p.id === id ? { ...p, ...updatedProduct } : p))
       })),

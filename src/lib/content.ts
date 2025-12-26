@@ -10,6 +10,9 @@ export interface Makale {
   githubRepo?: string;
   yazar: string;
   okunma: string;
+  slug?: string;
+  metaTitle?: string;
+  metaDescription?: string;
 }
 export interface Urun {
   id: string;
@@ -20,6 +23,9 @@ export interface Urun {
   stokDurumu: 'Anında Teslimat' | 'Gecikmeli';
   ozellikler: string[];
   aciklama: string;
+  slug?: string;
+  metaTitle?: string;
+  metaDescription?: string;
 }
 export interface Hizmet {
   id: string;
