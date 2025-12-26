@@ -1,21 +1,14 @@
 import React, { useEffect } from 'react';
-import { useSettings, hexToHsl } from '@/lib/settings-store';
+import { useSettings } from '@/lib/settings-store';
 interface ThemeProviderProps {
   children: React.ReactNode;
 }
 export function ThemeProvider({ children }: ThemeProviderProps) {
-  // Zustand: Primitive selector only
   const primaryColor = useSettings(s => s.primaryColor);
+  const updateSettings = useSettings(s => s.updateSettings);
   useEffect(() => {
-    if (primaryColor) {
-      try {
-        const hslValue = hexToHsl(primaryColor);
-        document.documentElement.style.setProperty('--primary', hslValue);
-        document.documentElement.style.setProperty('--ring', primaryColor);
-      } catch (error) {
-        console.error('Failed to update theme variables:', error);
-      }
-    }
-  }, [primaryColor]);
+    // Re-trigger update to apply CSS variables on mount
+    updateSettings({ primaryColor });
+  }, [primaryColor, updateSettings]);
   return <>{children}</>;
 }

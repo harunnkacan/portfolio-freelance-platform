@@ -1,7 +1,7 @@
 import '@/lib/errorReporter';
 import { enableMapSet } from "immer";
 enableMapSet();
-import React, { useEffect } from 'react'
+import React from 'react'
 import { createRoot } from 'react-dom/client'
 import {
   createBrowserRouter,
@@ -20,25 +20,17 @@ import { ContactPage } from '@/pages/ContactPage'
 import { AuthPage } from '@/pages/AuthPage'
 import { DashboardPage } from '@/pages/DashboardPage'
 import { AdminPage } from '@/pages/AdminPage'
+import { ServicesPage } from '@/pages/ServicesPage'
 import { Toaster } from '@/components/ui/sonner'
-import { useSettings } from '@/lib/settings-store';
+import { ThemeProvider } from '@/components/layout/ThemeProvider';
 const queryClient = new QueryClient();
-// Dynamic Style Handler
-function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const primaryColor = useSettings(s => s.primaryColor);
-  const updateSettings = useSettings(s => s.updateSettings);
-  useEffect(() => {
-    // Re-trigger update to apply CSS variables on mount
-    updateSettings({ primaryColor });
-  }, [primaryColor, updateSettings]);
-  return <>{children}</>;
-}
 const router = createBrowserRouter([
   { path: "/", element: <HomePage />, errorElement: <RouteErrorBoundary /> },
   { path: "/blog", element: <BlogPage />, errorElement: <RouteErrorBoundary /> },
   { path: "/blog/:id", element: <BlogDetailPage />, errorElement: <RouteErrorBoundary /> },
   { path: "/market", element: <MarketPage />, errorElement: <RouteErrorBoundary /> },
   { path: "/market/:id", element: <MarketDetailPage />, errorElement: <RouteErrorBoundary /> },
+  { path: "/services", element: <ServicesPage />, errorElement: <RouteErrorBoundary /> },
   { path: "/contact", element: <ContactPage />, errorElement: <RouteErrorBoundary /> },
   { path: "/auth", element: <AuthPage />, errorElement: <RouteErrorBoundary /> },
   { path: "/panel", element: <DashboardPage />, errorElement: <RouteErrorBoundary /> },

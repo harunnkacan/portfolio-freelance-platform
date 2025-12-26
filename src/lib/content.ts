@@ -19,6 +19,23 @@ export interface Urun {
   ozellikler: string[];
   aciklama: string;
 }
+export interface Hizmet {
+  id: string;
+  ad: string;
+  aciklama: string;
+  iconName: string;
+}
+export interface PricingTier {
+  id: string;
+  ad: string;
+  fiyat: string;
+  ozellikler: string[];
+  isPopular?: boolean;
+}
+export interface ProcessStep {
+  title: string;
+  desc: string;
+}
 export interface SidebarCategory {
   ad: string;
   iconName: string;
@@ -82,57 +99,6 @@ export const makaleler: Makale[] = [
     resim: "https://images.unsplash.com/photo-1516116216624-53e697fedbea?q=80&w=800&auto=format&fit=crop",
     okumaSuresi: "12 dk",
     githubRepo: "microsoft/typescript"
-  },
-  {
-    id: "m4",
-    baslik: "Yapay Zeka ve Yazılımın Geleceği",
-    kategori: "Teknoloji",
-    ozet: "AI araçlarının yazılım geliştirme süreçlerine etkisi ve gelecekteki rolü.",
-    icerik: "GitHub Copilot ve ChatGPT gibi araçlar artık birer yardımcıdan öte, iş ortağı haline geldi...",
-    tarih: "01 May 2024",
-    resim: "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=800&auto=format&fit=crop",
-    okumaSuresi: "10 dk"
-  },
-  {
-    id: "m5",
-    baslik: "Modern CSS Teknikleri 2024",
-    kategori: "Yazılım",
-    ozet: "Container Queries, Scope ve Layers gibi yeni CSS özelliklerini projelerinize dahil edin.",
-    icerik: "CSS dünyası son yıllarda inanılmaz bir değişim içerisinde...",
-    tarih: "28 Nis 2024",
-    resim: "https://images.unsplash.com/photo-1523437113738-bbd3ee0e2e73?q=80&w=800&auto=format&fit=crop",
-    okumaSuresi: "6 dk"
-  },
-  {
-    id: "m6",
-    baslik: "Docker ile Containerize Uygulamalar",
-    kategori: "Sunucu",
-    ozet: "Uygulamalarınızı Docker kullanarak nasıl izole edeceğinizi ve dağıtacağınızı öğrenin.",
-    icerik: "Docker, geliştirme süreçlerini standartlaştırmak için vazgeçilmez bir araçtır...",
-    tarih: "22 Nis 2024",
-    resim: "https://images.unsplash.com/photo-1605745341112-85968b193ef5?q=80&w=800&auto=format&fit=crop",
-    okumaSuresi: "15 dk",
-    githubRepo: "docker/cli"
-  },
-  {
-    id: "m7",
-    baslik: "Zustand vs Redux: Hangisi?",
-    kategori: "Yazılım",
-    ozet: "Modern React uygulamalarında state yönetimi için doğru aracı seçmek.",
-    icerik: "State yönetimi her zaman React geliştiricilerinin en büyük tartışma konularından biri olmuştur...",
-    tarih: "15 Nis 2024",
-    resim: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop",
-    okumaSuresi: "7 dk"
-  },
-  {
-    id: "m8",
-    baslik: "SEO Uyumlu Web Tasarımı",
-    kategori: "SEO",
-    ozet: "Arama motoru sonuçlarında üst sıralara çıkmak için tasarımda nelere dikkat edilmeli?",
-    icerik: "SEO sadece kelimelerden ibaret değildir, teknik altyapı da çok önemlidir...",
-    tarih: "10 Nis 2024",
-    resim: "https://images.unsplash.com/photo-1572177222102-78613f74cc13?q=80&w=800&auto=format&fit=crop",
-    okumaSuresi: "9 dk"
   }
 ];
 export const urunler: Urun[] = [
@@ -145,15 +111,21 @@ export const urunler: Urun[] = [
     stokDurumu: "Anında Teslimat",
     aciklama: "Modern ve fütüristik web projeleri için tasarlanmış kapsamlı bir UI kiti.",
     ozellikler: ["200+ Komponent", "Figma Dosyası Dahil", "React/Tailwind Desteği", "Koyu Tema Odaklı"]
-  },
-  {
-    id: "u2",
-    ad: "React Admin Dashboard",
-    fiyat: "850 ₺",
-    resim: "https://images.unsplash.com/photo-1551288049-bbbda536339a?q=80&w=800&auto=format&fit=crop",
-    kategori: "Yazılım",
-    stokDurumu: "Anında Teslimat",
-    aciklama: "Kurumsal projeleriniz için hızlıca özelleştirilebilir yönetim paneli şablonu.",
-    ozellikler: ["Zustand State Yönetimi", "Responsive Tasarım", "Chart.js Entegrasyonu", "Full TypeScript"]
   }
+];
+export const hizmetler: Hizmet[] = [
+  { id: "h1", ad: "Web Tasarım", aciklama: "Modern, hızlı ve SEO uyumlu web arayüzleri.", iconName: "Layout" },
+  { id: "h2", ad: "Mobil Geliştirme", aciklama: "iOS ve Android platformları için hibrit çözümler.", iconName: "Smartphone" },
+  { id: "h3", ad: "Kurumsal Kimlik", aciklama: "Dijital varlığınız için profesyonel marka tasarımı.", iconName: "Briefcase" }
+];
+export const pricingTiers: PricingTier[] = [
+  { id: "p1", ad: "Başlangıç", fiyat: "4.500 ₺", ozellikler: ["5 Sayfa Web Sitesi", "Mobil Uyumlu", "Ücretsiz Hosting (1 Yıl)", "Teknik Destek"] },
+  { id: "p2", ad: "Profesyonel", fiyat: "12.000 ₺", ozellikler: ["15 Sayfa Web Sitesi", "SEO Optimizasyonu", "Admin Paneli", "E-Ticaret Altyapısı", "7/24 Destek"], isPopular: true },
+  { id: "p3", ad: "Kurumsal", fiyat: "25.000+ ₺", ozellikler: ["Sınırsız Sayfa", "Özel Entegrasyonlar", "Yıllık Bakım", "Dedicated Sunucu", "VIP Danışmanlık"] }
+];
+export const isSureci: ProcessStep[] = [
+  { title: "Analiz", desc: "��htiyaçlarınızı belirliyoruz ve yol haritasını çiziyoruz." },
+  { title: "Tasarım", desc: "Kullanıcı odaklı, modern arayüzler tasarlıyoruz." },
+  { title: "Geliştirme", desc: "En güncel teknolojilerle kodlama sürecini başlatıyoruz." },
+  { title: "Yayım", desc: "Test süreçlerini tamamlayıp projenizi yayına alıyoruz." }
 ];

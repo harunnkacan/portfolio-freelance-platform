@@ -1,15 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar } from './Navbar';
 import { siteAyarlari } from '@/lib/content';
-import { Mail, Send, Github, Twitter, Linkedin } from 'lucide-react';
+import { Mail, Send, Github, Twitter, Linkedin, ChevronUp } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { AnimatePresence, motion } from 'framer-motion';
 interface SiteLayoutProps {
   children: React.ReactNode;
 }
 export function SiteLayout({ children }: SiteLayoutProps) {
+  const [showScrollTop, setShowScrollTop] = useState(false);
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 400);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground selection:bg-primary selection:text-primary-foreground">
       <Navbar />
-      <main className="flex-1">
+      <main className="flex-1 transition-opacity duration-500">
         {children}
       </main>
       <footer className="border-t border-primary/20 bg-black/80 backdrop-blur-md py-16">
@@ -63,6 +76,25 @@ export function SiteLayout({ children }: SiteLayoutProps) {
           </div>
         </div>
       </footer>
+      <AnimatePresence>
+        {showScrollTop && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            className="fixed bottom-8 right-8 z-[60]"
+          >
+            <Button
+              onClick={scrollToTop}
+              variant="default"
+              size="icon"
+              className="bg-primary hover:bg-primary/90 text-white rounded-none w-12 h-12 shadow-glow animate-float"
+            >
+              <ChevronUp className="w-6 h-6" />
+            </Button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

@@ -15,11 +15,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 const navLinks = [
   { name: 'Anasayfa', path: '/' },
+  { name: 'Hizmetler', path: '/services' },
   { name: 'Makaleler', path: '/blog' },
-  { name: 'Kategoriler', path: '/blog' },
-  { name: 'Hakkımda', path: '/contact' },
-  { name: 'Araçlar', path: '/market' },
-  { name: 'Dijital Üniler', path: '/market' },
+  { name: 'Market', path: '/market' },
+  { name: 'İletişim', path: '/contact' },
 ];
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -63,7 +62,7 @@ export function Navbar() {
                     <DropdownMenuTrigger asChild>
                       <Button variant="ghost" size="sm" className="gap-2 text-primary border border-primary/20 rounded-none h-10 px-4">
                         <User size={16} />
-                        <span className="text-[10px] font-black uppercase tracking-widest">Harun Kagan</span>
+                        <span className="text-[10px] font-black uppercase tracking-widest">{user?.name}</span>
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-56 bg-black border-primary/20 text-white rounded-none">
@@ -108,37 +107,6 @@ export function Navbar() {
             </div>
           </div>
         </div>
-        {isOpen && (
-          <div className="md:hidden border-t border-primary/10 bg-background h-screen">
-            <div className="flex flex-col p-8 space-y-6">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  to={link.path}
-                  onClick={() => setIsOpen(false)}
-                  className={cn(
-                    "text-3xl font-black uppercase tracking-tighter",
-                    location.pathname === link.path ? "text-primary" : "text-muted-foreground"
-                  )}
-                >
-                  {link.name}
-                </Link>
-              ))}
-              <div className="pt-8 border-t border-primary/10 space-y-4">
-                {isAuthenticated ? (
-                  <>
-                    <Link to="/panel" onClick={() => setIsOpen(false)} className="block text-2xl font-black uppercase text-primary">Üye Paneli</Link>
-                    <button onClick={() => { logout(); setIsOpen(false); }} className="text-xl uppercase font-bold text-muted-foreground">Çıkış Yap</button>
-                  </>
-                ) : (
-                  <Button asChild className="w-full btn-cyber h-14 rounded-none text-lg" onClick={() => setIsOpen(false)}>
-                    <Link to="/auth">GİRİŞ YAP</Link>
-                  </Button>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
       </nav>
       <SearchOverlay isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
     </>

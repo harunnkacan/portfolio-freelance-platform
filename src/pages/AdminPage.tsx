@@ -1,10 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useSettings } from '@/lib/settings-store';
-import { 
-  LayoutDashboard, Settings, User, FileText, ShoppingCart, 
+import {
+  LayoutDashboard, Settings, User, FileText, ShoppingCart,
   Database, Image, Brain, Globe, MessageSquare, Menu as MenuIcon,
-  Trash2, Save, Cloud, Search, Tool
+  Trash2, Save, Cloud, Search, Wrench
 } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from '@/components/ui/input';
@@ -14,7 +14,7 @@ import { toast } from 'sonner';
 const menuItems = [
   { id: 'dashboard', label: 'Yönetim Paneli', icon: LayoutDashboard },
   { id: 'colors', label: 'Tema Renkleri', icon: Settings },
-  { id: 'settings', label: 'Site Ayarları', icon: Tool },
+  { id: 'settings', label: 'Site Ayarları', icon: Wrench },
   { id: 'sales', label: 'Dijital Satış', icon: ShoppingCart },
   { id: 'users', label: 'Üyeler', icon: User },
   { id: 'posts', label: 'Makaleler', icon: FileText },
@@ -85,8 +85,8 @@ export function AdminPage() {
                   </div>
                   <div className="flex-1 flex items-center gap-4">
                     <span className="text-xs font-mono uppercase font-bold">HEX Kod:</span>
-                    <Input 
-                      value={primaryColor} 
+                    <Input
+                      value={primaryColor}
                       onChange={(e) => updateSettings({ primaryColor: e.target.value })}
                       className="max-w-[150px] bg-black border-primary/20 font-mono text-center"
                     />
@@ -99,24 +99,24 @@ export function AdminPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 glass-red p-8">
                   <div className="space-y-2">
                     <Label className="text-[10px] uppercase font-bold text-muted-foreground">Başlık (H1)</Label>
-                    <Input 
-                      value={heroTitle} 
+                    <Input
+                      value={heroTitle}
                       onChange={(e) => updateSettings({ heroTitle: e.target.value })}
                       className="bg-black border-primary/20"
                     />
                   </div>
                   <div className="space-y-2">
                     <Label className="text-[10px] uppercase font-bold text-muted-foreground">CTA Buton Metni</Label>
-                    <Input 
-                      value={heroCtaText} 
+                    <Input
+                      value={heroCtaText}
                       onChange={(e) => updateSettings({ heroCtaText: e.target.value })}
                       className="bg-black border-primary/20"
                     />
                   </div>
                   <div className="space-y-2 md:col-span-2">
                     <Label className="text-[10px] uppercase font-bold text-muted-foreground">Alt Başlık (Açıklama)</Label>
-                    <Input 
-                      value={heroSubtitle} 
+                    <Input
+                      value={heroSubtitle}
                       onChange={(e) => updateSettings({ heroSubtitle: e.target.value })}
                       className="bg-black border-primary/20"
                     />
