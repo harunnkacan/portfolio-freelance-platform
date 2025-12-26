@@ -8,6 +8,8 @@ import { DashboardPanel } from '@/components/admin/DashboardPanel';
 import { AISettingsPanel } from '@/components/admin/AISettingsPanel';
 import { ContentPanel } from '@/components/admin/ContentPanel';
 import { MediaManager } from '@/components/admin/MediaManager';
+import { UserManagement } from '@/components/admin/UserManagement';
+import { AuditLogPanel } from '@/components/admin/AuditLogPanel';
 import { Bell, Search, ShieldCheck, Terminal, Lock, RefreshCcw } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useSettings } from '@/lib/settings-store';
@@ -35,6 +37,8 @@ export function AdminPage() {
   const renderContent = () => {
     switch (activeTab) {
       case 'dashboard': return <DashboardPanel />;
+      case 'users': return <UserManagement />;
+      case 'logs': return <AuditLogPanel />;
       case 'market':
       case 'orders':
       case 'coupons': return <MarketPanel />;

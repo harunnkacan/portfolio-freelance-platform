@@ -1,34 +1,42 @@
 ================================================================================
-LUMINA - KİŞİSEL BLOG SCRIPTİ (v1.2.0) KURULUM REHBERİ
+LUMINA - KİŞİSEL BLOG SCRIPTİ (v1.3.0) KURULUM REHBERİ - SON S��RÜM
 ================================================================================
-1. SİSTEM GEREKSİNİMLERİ:
+1. GENEL BAKIŞ:
 --------------------------------------------------------------------------------
-- Bir Cloudflare hesabı (Workers & KV kullanımı için)
-- Bun (v1.x) veya Node.js (v18+) kurulu terminal
-- OpenRouter API Anahtarı (AI Özellikleri için opsiyonel)
-2. YAYINA ALMA (DEPLOYMENT):
+Lumina, modern web teknolojileriyle geliştirilmiş, "Cyber Red" estetiğine sahip
+bir portfolyo, blog ve dijital market çözümüdür. Yazılım geliştiriciler ve
+dijital içerik üreticileri için optimize edilmiştir.
+2. TEKNİK ÖZELLİKLER:
 --------------------------------------------------------------------------------
-Scripti Cloudflare Workers üzerinde yayına almak için terminale şunları yazın:
+- Framework: React (Vite) + TypeScript
+- Styling: Tailwind CSS (Custom Cyber Red Palette)
+- State: Zustand (Persistent)
+- Animasyon: Framer Motion
+- Admin Paneli: Kapsamlı (İçerik, Market, Kullanıcı, AI, Medya, Loglar)
+- AI Entegrasyonu: OpenRouter (GPT-4o, Claude 3.5 desteği)
+3. KURULUM VE YAYIN (DEPLOYMENT):
+--------------------------------------------------------------------------------
+Lumina, Cloudflare Workers & Assets üzerinde 1 dakikada yayına alınabilir:
 $ bun install          # Bağımlılıkları yükle
-$ bun run deploy       # wrangler login sonrası otomatik yayına alım
-3. ADMİN GİRİŞ BİLGİLERİ:
+$ bun run deploy       # wrangler ile yayına al (Wrangler login gerektirir)
+4. YÖNETİCİ VE ÜYE YÖNETİMİ:
 --------------------------------------------------------------------------------
-Platform yönetim paneline erişmek için:
-URL: /auth
-E-Posta: admin@lumina.blog
-Şifre: 123456 (Mock)
-Admin paneline girdikten sonra sağ üstteki "KULLANICI MODUNA DÖN" linkini
-takip ederek siteyi admin yetkileriyle (Düzenleme butonları aktif) gezebilirsiniz.
-4. YAPILANDIRMA (CONFIG):
+- URL: /auth
+- Varsayılan Admin: admin@lumina.blog
+- Varsayılan Şifre: 123456 (Simüle edilmiş)
+- Audit Logs: Sistemdeki her kritik eylem (giriş, güncelleme, silme) 
+  Admin > Sistem Günlüğü sekmesinde tarih, kullanıcı ve detayla kaydedilir.
+5. SİSTEM YEDEĞİ VE RESTORE:
 --------------------------------------------------------------------------------
-- Site ayarları Zustand persist middleware ile tarayıcıda saklanır.
-- Cloudflare R2 dosya yöneticisi arayüzü simüle edilmiştir.
-- OpenRouter API anahtarınızı Admin > AI Asistan sekmesinden ekleyebilirsiniz.
-5. DOSYA YAPISI:
+- Site Ayarları Yedeği: Admin > Site Ayarları > SİSTEM YEDEĞİ (JSON)
+- Audit Log Çıktısı: Admin > Sistem Günlüğü > DIŞA AKTAR (JSON)
+- Bu dosyalar yerel tarayıcı hafızasını sıfırladığınızda ayarları geri 
+  yüklemek için kullanılabilir.
+6. AI ASİSTAN YAPILANDIRMASI:
 --------------------------------------------------------------------------------
-/src/lib/content.ts      -> Ana veri kaynağı (CMS)
-/src/lib/settings-store.ts -> Dinamik sistem ayarları
-/worker/index.ts         -> Cloudflare Workers backend mantığı
+- OpenRouter API anahtarınızı Admin > AI Asistan sekmesine girin.
+- Model ve Temperature ayarlarını buradan yönetebilirsiniz.
+- Makale detay sayfalarında "AI Assistant" bloğu otomatik aktifleşecektir.
 ================================================================================
-ÜRETİME HAZIR (PRODUCTION READY) - 2024
+ÜRETİME HAZIR (PRODUCTION READY) - GÜNCEL SÜRÜM - 2024
 ================================================================================

@@ -2,7 +2,8 @@ import React from 'react';
 import {
   LayoutDashboard, PlusSquare, ShoppingBag, CreditCard,
   Ticket, FileText, FolderTree, MessageSquare,
-  Settings, Brain, Shield, ArrowLeft, Terminal, HardDrive
+  Settings, Brain, Shield, ArrowLeft, Terminal, HardDrive,
+  Users, Activity
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Link } from 'react-router-dom';
@@ -37,6 +38,13 @@ const menuGroups: MenuGroup[] = [
       { id: 'posts', label: 'Makaleler', icon: FileText },
       { id: 'categories', label: 'Kategoriler', icon: FolderTree },
       { id: 'comments', label: 'Yorumlar', icon: MessageSquare },
+    ]
+  },
+  {
+    label: 'ÜYELİK',
+    items: [
+      { id: 'users', label: 'Kullanıcı Yönetimi', icon: Users },
+      { id: 'logs', label: 'Sistem Günlüğü', icon: Activity },
     ]
   },
   {

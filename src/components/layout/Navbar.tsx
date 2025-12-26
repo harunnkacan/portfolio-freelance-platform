@@ -79,16 +79,27 @@ export function Navbar() {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-56 bg-black border-primary/20 text-white rounded-none">
-                      <DropdownMenuLabel className="text-[10px] uppercase font-black text-muted-foreground">Hesabım</DropdownMenuLabel>
+                      <DropdownMenuLabel className="text-[10px] uppercase font-black text-primary tracking-widest">HESABIM</DropdownMenuLabel>
                       <DropdownMenuSeparator className="bg-primary/20" />
                       <DropdownMenuItem asChild>
-                        <Link to="/panel" className="cursor-pointer text-xs font-bold uppercase py-3">Üye Paneli</Link>
+                        <Link to="/panel" className="cursor-pointer text-xs font-bold uppercase py-3 hover:text-primary">Panelim</Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem asChild>
-                        <Link to="/admin?mode=admin" className="cursor-pointer flex items-center gap-2 text-xs font-bold uppercase py-3">
-                          <Shield size={14} className="text-primary" /> Admin Panel
-                        </Link>
+                        <Link to="/panel?tab=orders" className="cursor-pointer text-xs font-bold uppercase py-3 hover:text-primary">Siparişlerim</Link>
                       </DropdownMenuItem>
+                      <DropdownMenuItem asChild>
+                        <Link to="/market" className="cursor-pointer text-xs font-bold uppercase py-3 hover:text-primary">Market</Link>
+                      </DropdownMenuItem>
+                      {userRole === 'admin' && (
+                        <>
+                          <DropdownMenuSeparator className="bg-primary/20" />
+                          <DropdownMenuItem asChild>
+                            <Link to="/admin?mode=admin" className="cursor-pointer flex items-center gap-2 text-xs font-bold uppercase py-3 text-primary">
+                              <Shield size={14} /> Admin Panel
+                            </Link>
+                          </DropdownMenuItem>
+                        </>
+                      )}
                       <DropdownMenuSeparator className="bg-primary/20" />
                       <DropdownMenuItem onClick={() => logout()} className="text-primary cursor-pointer text-xs font-bold uppercase py-3">
                         <LogOut size={14} className="mr-2" /> Çıkış Yap
