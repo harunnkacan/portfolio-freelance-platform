@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSearchParams, Navigate } from 'react-router-dom';
 import { AdminSidebar } from '@/components/admin/AdminSidebar';
@@ -6,14 +6,16 @@ import { SettingsPanel } from '@/components/admin/SettingsPanel';
 import { MarketPanel } from '@/components/admin/MarketPanel';
 import { DashboardPanel } from '@/components/admin/DashboardPanel';
 import { AISettingsPanel } from '@/components/admin/AISettingsPanel';
-import { User, Bell, Search, ShieldCheck } from 'lucide-react';
+import { ContentPanel } from '@/components/admin/ContentPanel';
+import { Bell, Search, ShieldCheck, Terminal, Lock } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 export function AdminPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const activeTab = searchParams.get('tab') || 'dashboard';
-  const user = useAuth(s => s.user);
+  const userName = useAuth(s => s.user?.name);
+  const userRole = useAuth(s => s.user?.role);
   const isAuthenticated = useAuth(s => s.isAuthenticated);
-  if (!isAuthenticated || user?.role !== 'admin') {
+  if (!isAuthenticated || userRole !== 'admin') {
     return <Navigate to="/auth" />;
   }
   const handleTabChange = (id: string) => {
@@ -24,13 +26,38 @@ export function AdminPage() {
       case 'dashboard':
         return <DashboardPanel />;
       case 'market':
-      case 'products':
       case 'orders':
+      case 'coupons':
         return <MarketPanel />;
+      case 'posts':
+      case 'categories':
+      case 'comments':
+        return <ContentPanel />;
       case 'settings':
         return <SettingsPanel />;
       case 'ai':
         return <AISettingsPanel />;
+      case 'security':
+        return (
+          <div className="space-y-10">
+            <h2 className="text-4xl font-black uppercase tracking-tighter text-glow flex items-center gap-3">
+              <Lock className="text-primary" /> GÜVENLİK MERKEZİ
+            </h2>
+            <div className="glass-red p-8 space-y-6">
+              <h3 className="text-xs font-black uppercase tracking-widest text-primary">SİSTEM ERİŞİM LOGLARI</h3>
+              <div className="space-y-4 font-mono text-[10px]">
+                {[...Array(5)].map((_, i) => (
+                  <div key={i} className="flex justify-between border-b border-primary/5 pb-2 opacity-70">
+                    <span className="text-emerald-500">[SUCCESS]</span>
+                    <span className="text-white">ADMIN_AUTH_GRANTED</span>
+                    <span className="text-muted-foreground">IP: 192.168.1.{10 + i}</span>
+                    <span className="text-primary">{new Date().toLocaleTimeString()}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        );
       default:
         return (
           <div className="flex flex-col items-center justify-center h-[60vh] text-center space-y-4">
@@ -70,17 +97,18 @@ export function AdminPage() {
             </button>
             <div className="flex items-center gap-3 border-l border-primary/20 pl-8">
               <div className="text-right">
-                <p className="text-[10px] font-black uppercase tracking-widest leading-none">{user?.name}</p>
+                <p className="text-[10px] font-black uppercase tracking-widest leading-none">{userName}</p>
                 <p className="text-[8px] font-black uppercase text-primary tracking-widest mt-1">SUPER_ADMIN</p>
               </div>
               <div className="w-10 h-10 rounded-full border border-primary/20 p-0.5 overflow-hidden grayscale">
-                <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.name}`} alt="Avatar" className="w-full h-full object-cover" />
+                <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${userName}`} alt="Avatar" className="w-full h-full object-cover" />
               </div>
             </div>
           </div>
         </header>
-        <main className="flex-1 overflow-y-auto cyber-grid">
-          <div className="max-w-7xl mx-auto px-10 py-12">
+        <main className="flex-1 overflow-y-auto cyber-grid relative">
+          <div className="noise-overlay pointer-events-none opacity-20" />
+          <div className="max-w-7xl mx-auto px-10 py-12 relative z-10">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTab}

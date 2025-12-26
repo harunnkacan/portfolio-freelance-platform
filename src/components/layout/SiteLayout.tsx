@@ -18,11 +18,15 @@ export function SiteLayout({ children }: SiteLayoutProps) {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [pathname]);
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground selection:bg-primary selection:text-primary-foreground">
+    <div className="min-h-screen flex flex-col bg-background text-foreground selection:bg-primary selection:text-primary-foreground relative">
+      <div className="noise-overlay" />
       <Navbar />
       <AnimatePresence mode="wait">
         <motion.main
@@ -30,13 +34,13 @@ export function SiteLayout({ children }: SiteLayoutProps) {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.3, ease: 'easeOut' }}
-          className="flex-1"
+          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          className="flex-1 relative z-10"
         >
           {children}
         </motion.main>
       </AnimatePresence>
-      <footer className="border-t border-primary/20 bg-black/80 backdrop-blur-md py-16">
+      <footer className="border-t border-primary/20 bg-black/80 backdrop-blur-md py-16 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
             <div className="lg:col-span-2 space-y-6">

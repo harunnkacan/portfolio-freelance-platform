@@ -95,7 +95,11 @@ export function AdminSidebar({ activeTab, onTabChange }: AdminSidebarProps) {
           </div>
         ))}
       </div>
-      <div className="p-6 border-t border-primary/20">
+      <div className="p-6 border-t border-primary/20 space-y-4">
+        <div className="flex items-center justify-between px-2">
+          <span className="text-[8px] font-black text-muted-foreground uppercase tracking-widest">BUILD_ID: 1204X</span>
+          <span className="text-[8px] font-black text-primary uppercase tracking-widest bg-primary/10 px-2 py-0.5 border border-primary/20">v1.2.0</span>
+        </div>
         <Link
           to="/"
           className="flex items-center justify-center gap-3 w-full bg-white/5 border border-white/10 h-12 text-[10px] font-black uppercase tracking-widest text-white hover:bg-primary hover:text-white hover:border-primary transition-all shadow-lg hover:shadow-glow"
