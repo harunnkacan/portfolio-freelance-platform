@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, X, ArrowRight, FileText, ShoppingBag } from 'lucide-react';
-import { useContentStore } from '@/lib/content-store';
+import { makaleler, urunler } from '@/lib/content';
 import { Link } from 'react-router-dom';
 interface SearchOverlayProps {
   isOpen: boolean;
@@ -9,9 +9,6 @@ interface SearchOverlayProps {
 }
 export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
   const [query, setQuery] = useState('');
-  // Zustand: Primitive selectors only
-  const makaleler = useContentStore(s => s.posts);
-  const urunler = useContentStore(s => s.products);
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -19,10 +16,10 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
     window.addEventListener('keydown', handleEsc);
     return () => window.removeEventListener('keydown', handleEsc);
   }, [onClose]);
-  const filteredBlog = query.length > 1
+  const filteredBlog = query.length > 1 
     ? makaleler.filter(m => m.baslik.toLowerCase().includes(query.toLowerCase())).slice(0, 4)
     : [];
-  const filteredMarket = query.length > 1
+  const filteredMarket = query.length > 1 
     ? urunler.filter(u => u.ad.toLowerCase().includes(query.toLowerCase())).slice(0, 4)
     : [];
   return (
@@ -36,7 +33,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
         >
           <div className="max-w-5xl mx-auto">
             <div className="flex justify-between items-center mb-12">
-              <span className="text-primary font-black tracking-tighter text-2xl text-glow">LUMINA SEARCH</span>
+              <span className="text-primary font-black tracking-tighter text-2xl">LUMINA SEARCH</span>
               <button onClick={onClose} className="p-2 hover:text-primary transition-colors">
                 <X size={32} />
               </button>
@@ -65,7 +62,7 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                       </div>
                     </Link>
                   ))}
-                  {query.length > 1 && filteredBlog.length === 0 && <p className="text-muted-foreground italic text-sm font-mono uppercase">Sonuç bulunamadı.</p>}
+                  {query.length > 1 && filteredBlog.length === 0 && <p className="text-muted-foreground italic text-sm">Sonu�� bulunamadı.</p>}
                 </div>
               </section>
               <section>
@@ -84,13 +81,13 @@ export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                       </div>
                     </Link>
                   ))}
-                  {query.length > 1 && filteredMarket.length === 0 && <p className="text-muted-foreground italic text-sm font-mono uppercase">Sonuç bulunamadı.</p>}
+                  {query.length > 1 && filteredMarket.length === 0 && <p className="text-muted-foreground italic text-sm">Sonuç bulunamadı.</p>}
                 </div>
               </section>
             </div>
             <div className="mt-24 text-center">
               <p className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest">
-                ESC ile Kapat — Enter ile Onayla
+                ESC ile Kapat ��� Enter ile Onayla
               </p>
             </div>
           </div>

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, User, LogOut, Shield } from 'lucide-react';
+import { Menu, X, User, LogOut, Shield, Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/lib/auth';
 import { Button } from '@/components/ui/button';
+import { SearchOverlay } from '@/components/ui/search-overlay';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,110 +17,130 @@ const navLinks = [
   { name: 'Anasayfa', path: '/' },
   { name: 'Makaleler', path: '/blog' },
   { name: 'Mağaza', path: '/market' },
+  { name: 'İletişim', path: '/contact' },
 ];
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const location = useLocation();
   const user = useAuth((s) => s.user);
   const logout = useAuth((s) => s.logout);
   const isAuthenticated = useAuth((s) => s.isAuthenticated);
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-primary/20 bg-background/80 backdrop-blur-md">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
-          <div className="flex items-center">
-            <Link to="/" className="text-2xl font-black tracking-tighter uppercase text-primary text-glow">
-              LUMINA
-            </Link>
+    <>
+      <nav className="sticky top-0 z-50 w-full border-b border-primary/20 bg-background/80 backdrop-blur-md">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex h-16 items-center justify-between">
+            <div className="flex items-center">
+              <Link to="/" className="text-2xl font-black tracking-tighter uppercase text-primary text-glow">
+                LUMINA
+              </Link>
+            </div>
+            <div className="hidden md:block">
+              <div className="flex items-center space-x-8">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.name}
+                    to={link.path}
+                    className={cn(
+                      "text-[10px] font-black uppercase tracking-widest transition-all hover:text-primary",
+                      location.pathname === link.path ? "text-primary border-b border-primary" : "text-muted-foreground"
+                    )}
+                  >
+                    {link.name}
+                  </Link>
+                ))}
+                <button 
+                  onClick={() => setIsSearchOpen(true)}
+                  className="p-2 text-muted-foreground hover:text-primary transition-all"
+                >
+                  <Search size={18} />
+                </button>
+                {isAuthenticated ? (
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="sm" className="gap-2 text-primary border border-primary/20 rounded-none h-10 px-4">
+                        <User size={16} />
+                        <span className="text-[10px] font-black uppercase tracking-widest">{user?.name}</span>
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-56 bg-black border-primary/20 text-white rounded-none">
+                      <DropdownMenuLabel className="text-[10px] uppercase font-black text-muted-foreground">Hesabım</DropdownMenuLabel>
+                      <DropdownMenuSeparator className="bg-primary/20" />
+                      <DropdownMenuItem asChild>
+                        <Link to="/panel" className="cursor-pointer text-xs font-bold uppercase py-3">Üye Paneli</Link>
+                      </DropdownMenuItem>
+                      {user?.role === 'admin' && (
+                        <DropdownMenuItem asChild>
+                          <Link to="/admin" className="cursor-pointer flex items-center gap-2 text-xs font-bold uppercase py-3">
+                            <Shield size={14} className="text-primary" /> Admin Panel
+                          </Link>
+                        </DropdownMenuItem>
+                      )}
+                      <DropdownMenuSeparator className="bg-primary/20" />
+                      <DropdownMenuItem onClick={() => logout()} className="text-primary cursor-pointer text-xs font-bold uppercase py-3">
+                        <LogOut size={14} className="mr-2" /> Çıkış Yap
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                ) : (
+                  <Button asChild variant="outline" size="sm" className="border-primary/40 text-primary hover:bg-primary hover:text-white transition-all rounded-none font-black uppercase text-[10px] tracking-widest h-10 px-6">
+                    <Link to="/auth">Giriş</Link>
+                  </Button>
+                )}
+              </div>
+            </div>
+            <div className="md:hidden flex items-center gap-2">
+               <button 
+                  onClick={() => setIsSearchOpen(true)}
+                  className="p-2 text-primary"
+                >
+                  <Search size={20} />
+                </button>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setIsOpen(!isOpen)}
+                className="text-primary"
+              >
+                {isOpen ? <X /> : <Menu />}
+              </Button>
+            </div>
           </div>
-          <div className="hidden md:block">
-            <div className="flex items-center space-x-8">
+        </div>
+        {isOpen && (
+          <div className="md:hidden border-t border-primary/10 bg-background h-screen">
+            <div className="flex flex-col p-8 space-y-8">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   to={link.path}
+                  onClick={() => setIsOpen(false)}
                   className={cn(
-                    "text-xs font-bold uppercase tracking-widest transition-all hover:text-primary",
-                    location.pathname === link.path ? "text-primary underline underline-offset-8" : "text-muted-foreground"
+                    "text-4xl font-black uppercase tracking-tighter",
+                    location.pathname === link.path ? "text-primary" : "text-muted-foreground"
                   )}
                 >
                   {link.name}
                 </Link>
               ))}
-              {isAuthenticated ? (
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="sm" className="gap-2 text-primary border border-primary/20">
-                      <User size={16} />
-                      {user?.name}
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-56 bg-cyber-dark border-primary/20 text-white">
-                    <DropdownMenuLabel>Hesabım</DropdownMenuLabel>
-                    <DropdownMenuSeparator className="bg-primary/20" />
-                    <DropdownMenuItem asChild>
-                      <Link to="/panel" className="cursor-pointer">Panel</Link>
-                    </DropdownMenuItem>
-                    {user?.role === 'admin' && (
-                      <DropdownMenuItem asChild>
-                        <Link to="/admin" className="cursor-pointer flex items-center gap-2">
-                          <Shield size={14} /> Admin
-                        </Link>
-                      </DropdownMenuItem>
-                    )}
-                    <DropdownMenuSeparator className="bg-primary/20" />
-                    <DropdownMenuItem onClick={() => logout()} className="text-primary cursor-pointer">
-                      <LogOut size={14} className="mr-2" /> Çıkış Yap
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              ) : (
-                <Button asChild variant="outline" size="sm" className="border-primary text-primary hover:bg-primary hover:text-white transition-all rounded-none font-bold uppercase tracking-tighter">
-                  <Link to="/auth">Giriş Yap</Link>
-                </Button>
-              )}
-            </div>
-          </div>
-          <div className="md:hidden flex items-center gap-4">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-primary"
-            >
-              {isOpen ? <X /> : <Menu />}
-            </Button>
-          </div>
-        </div>
-      </div>
-      {isOpen && (
-        <div className="md:hidden border-t border-primary/10 bg-background animate-in slide-in-from-top-4 duration-200 h-screen">
-          <div className="flex flex-col p-6 space-y-6">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.path}
-                onClick={() => setIsOpen(false)}
-                className={cn(
-                  "text-2xl font-bold uppercase tracking-tighter",
-                  location.pathname === link.path ? "text-primary" : "text-muted-foreground"
+              <div className="pt-8 border-t border-primary/10 space-y-4">
+                {isAuthenticated ? (
+                  <>
+                    <Link to="/panel" onClick={() => setIsOpen(false)} className="block text-2xl font-black uppercase text-primary">Üye Paneli</Link>
+                    <button onClick={() => { logout(); setIsOpen(false); }} className="text-xl uppercase font-bold text-muted-foreground">Çıkış Yap</button>
+                  </>
+                ) : (
+                  <Button asChild className="w-full btn-cyber h-16 rounded-none text-lg" onClick={() => setIsOpen(false)}>
+                    <Link to="/auth">GİRİŞ YAP</Link>
+                  </Button>
                 )}
-              >
-                {link.name}
-              </Link>
-            ))}
-            <div className="pt-6 border-t border-primary/10">
-              {isAuthenticated ? (
-                <Button onClick={() => { logout(); setIsOpen(false); }} className="w-full btn-cyber rounded-none">Çıkış Yap</Button>
-              ) : (
-                <Button asChild className="w-full btn-cyber rounded-none" onClick={() => setIsOpen(false)}>
-                  <Link to="/auth">Giriş Yap / Kayıt Ol</Link>
-                </Button>
-              )}
+              </div>
             </div>
           </div>
-        </div>
-      )}
-    </nav>
+        )}
+      </nav>
+      <SearchOverlay isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+    </>
   );
 }

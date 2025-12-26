@@ -18,6 +18,7 @@ import { BlogDetailPage } from '@/pages/BlogDetailPage'
 import { MarketDetailPage } from '@/pages/MarketDetailPage'
 import { ContactPage } from '@/pages/ContactPage'
 import { AuthPage } from '@/pages/AuthPage'
+import { DashboardPage } from '@/pages/DashboardPage'
 import { Toaster } from '@/components/ui/sonner'
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -58,12 +59,12 @@ const router = createBrowserRouter([
   },
   {
     path: "/panel",
-    element: <HomePage />, // Placeholder for Phase 3
+    element: <DashboardPage />,
     errorElement: <RouteErrorBoundary />,
   },
   {
     path: "/admin",
-    element: <HomePage />, // Placeholder for Phase 3
+    element: <DashboardPage />, // Placeholder for Phase 4 Admin
     errorElement: <RouteErrorBoundary />,
   },
 ]);
