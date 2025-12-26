@@ -1,6 +1,6 @@
 # Lumina Folio
 
-[![Deploy to Cloudflare][cloudflarebutton]]
+[![Deploy to Cloudflare][![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/harunnkacan/portfolio-freelance-platform)]
 
 A modern, full-stack React application template powered by Cloudflare Workers. Features a responsive UI with shadcn/ui components, Tailwind CSS, TypeScript, and Hono for API routes. Perfect for portfolios, dashboards, or any web app needing edge deployment.
 
@@ -119,7 +119,7 @@ npx wrangler deploy
 - Preview deploys: `wrangler deploy --opt preview`.
 - Monitoring: Built-in via Cloudflare dashboard.
 
-[![Deploy to Cloudflare][cloudflarebutton]]
+[![Deploy to Cloudflare][![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/harunnkacan/portfolio-freelance-platform)]
 
 ## 🤝 Contributing
 
