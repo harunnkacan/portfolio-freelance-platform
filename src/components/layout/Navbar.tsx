@@ -28,6 +28,7 @@ export function Navbar() {
   const location = useLocation();
   // Zustand: Primitive selectors only
   const userName = useAuth((s) => s.user?.name);
+  const userRole = useAuth((s) => s.user?.role);
   const isAuthenticated = useAuth((s) => s.isAuthenticated);
   const logout = useAuth((s) => s.logout);
   const isAdminMode = searchParams.get('mode') === 'admin';
@@ -108,7 +109,7 @@ export function Navbar() {
                   </DropdownMenu>
                 ) : (
                   <Button asChild variant="outline" size="sm" className="border-primary/40 text-primary hover:bg-primary hover:text-white transition-all rounded-none font-black uppercase text-[10px] tracking-widest h-10 px-6">
-                    <Link to="/auth">Giri��</Link>
+                    <Link to="/auth">Giriş</Link>
                   </Button>
                 )}
               </div>
