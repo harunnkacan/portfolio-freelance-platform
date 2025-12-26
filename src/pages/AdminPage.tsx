@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSearchParams, Navigate } from 'react-router-dom';
 import { AdminSidebar } from '@/components/admin/AdminSidebar';
@@ -7,14 +7,25 @@ import { MarketPanel } from '@/components/admin/MarketPanel';
 import { DashboardPanel } from '@/components/admin/DashboardPanel';
 import { AISettingsPanel } from '@/components/admin/AISettingsPanel';
 import { ContentPanel } from '@/components/admin/ContentPanel';
-import { Bell, Search, ShieldCheck, Terminal, Lock } from 'lucide-react';
+import { MediaManager } from '@/components/admin/MediaManager';
+import { Bell, Search, ShieldCheck, Terminal, Lock, RefreshCcw } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
+import { useSettings } from '@/lib/settings-store';
 export function AdminPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const activeTab = searchParams.get('tab') || 'dashboard';
   const userName = useAuth(s => s.user?.name);
   const userRole = useAuth(s => s.user?.role);
   const isAuthenticated = useAuth(s => s.isAuthenticated);
+  const syncStatus = useSettings(s => s.syncStatus);
+  const [isSyncing, setIsSyncing] = useState(false);
+  useEffect(() => {
+    if (syncStatus === 'syncing') {
+      setIsSyncing(true);
+      const timer = setTimeout(() => setIsSyncing(false), 800);
+      return () => clearTimeout(timer);
+    }
+  }, [syncStatus]);
   if (!isAuthenticated || userRole !== 'admin') {
     return <Navigate to="/auth" />;
   }
@@ -23,20 +34,16 @@ export function AdminPage() {
   };
   const renderContent = () => {
     switch (activeTab) {
-      case 'dashboard':
-        return <DashboardPanel />;
+      case 'dashboard': return <DashboardPanel />;
       case 'market':
       case 'orders':
-      case 'coupons':
-        return <MarketPanel />;
+      case 'coupons': return <MarketPanel />;
       case 'posts':
       case 'categories':
-      case 'comments':
-        return <ContentPanel />;
-      case 'settings':
-        return <SettingsPanel />;
-      case 'ai':
-        return <AISettingsPanel />;
+      case 'comments': return <ContentPanel />;
+      case 'settings': return <SettingsPanel />;
+      case 'ai': return <AISettingsPanel />;
+      case 'media': return <MediaManager />;
       case 'security':
         return (
           <div className="space-y-10">
@@ -44,7 +51,7 @@ export function AdminPage() {
               <Lock className="text-primary" /> GÜVENLİK MERKEZİ
             </h2>
             <div className="glass-red p-8 space-y-6">
-              <h3 className="text-xs font-black uppercase tracking-widest text-primary">SİSTEM ERİŞİM LOGLARI</h3>
+              <h3 className="text-xs font-black uppercase tracking-widest text-primary">SİSTEM ERİŞ��M LOGLARI</h3>
               <div className="space-y-4 font-mono text-[10px]">
                 {[...Array(5)].map((_, i) => (
                   <div key={i} className="flex justify-between border-b border-primary/5 pb-2 opacity-70">
@@ -56,19 +63,13 @@ export function AdminPage() {
                 ))}
               </div>
             </div>
-          </div>
-        );
-      default:
-        return (
-          <div className="flex flex-col items-center justify-center h-[60vh] text-center space-y-4">
-            <div className="w-20 h-20 bg-primary/10 border border-primary/20 flex items-center justify-center">
-              <ShieldCheck size={40} className="text-primary opacity-20" />
+            <div className="flex gap-4">
+              <button className="btn-cyber h-12 px-6 text-[10px]">VIEW ROBOTS.TXT</button>
+              <button className="btn-cyber h-12 px-6 text-[10px]">REGENERATE SITEMAP</button>
             </div>
-            <p className="text-muted-foreground font-mono text-sm uppercase italic">
-              Bu modül ({activeTab}) geliştirme aşamasındadır.
-            </p>
           </div>
         );
+      default: return <DashboardPanel />;
     }
   };
   return (
@@ -76,21 +77,21 @@ export function AdminPage() {
       <AdminSidebar activeTab={activeTab} onTabChange={handleTabChange} />
       <div className="flex-1 flex flex-col h-screen overflow-hidden">
         <header className="h-20 border-b border-primary/20 bg-black/40 backdrop-blur-md px-10 flex items-center justify-between shrink-0">
-          <div className="flex items-center gap-4 text-muted-foreground">
-            <span className="text-[10px] font-black uppercase tracking-[0.2em]">SİSTEM DURUMU:</span>
-            <span className="text-[10px] font-black uppercase tracking-widest text-emerald-500 flex items-center gap-1.5">
-              <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
-              ONLINE & GÜVENLİ
-            </span>
+          <div className="flex items-center gap-6 text-muted-foreground">
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] font-black uppercase tracking-[0.2em]">DURUM:</span>
+              <span className="text-[10px] font-black uppercase tracking-widest text-emerald-500 flex items-center gap-1.5">
+                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
+                ONLINE
+              </span>
+            </div>
+            {isSyncing && (
+              <div className="flex items-center gap-2 text-[10px] font-black text-primary animate-pulse">
+                <RefreshCcw size={10} className="animate-spin" /> SYNCING...
+              </div>
+            )}
           </div>
           <div className="flex items-center gap-8">
-            <div className="relative group hidden md:block">
-              <Search size={18} className="absolute left-0 top-1/2 -translate-y-1/2 text-muted-foreground group-focus-within:text-primary" />
-              <input
-                placeholder="KOMUT ARA..."
-                className="bg-transparent border-none pl-8 py-2 outline-none text-[10px] font-black uppercase tracking-widest w-40 focus:w-60 transition-all placeholder:text-muted-foreground/30"
-              />
-            </div>
             <button className="relative p-2 text-muted-foreground hover:text-primary transition-colors">
               <Bell size={20} />
               <span className="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full" />

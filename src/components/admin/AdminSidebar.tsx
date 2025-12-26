@@ -44,6 +44,7 @@ const menuGroups: MenuGroup[] = [
     items: [
       { id: 'settings', label: 'Site Ayarları', icon: Settings },
       { id: 'ai', label: 'AI Asistan', icon: Brain },
+      { id: 'media', label: 'Dosya Yöneticisi', icon: HardDrive },
       { id: 'security', label: 'Güvenlik', icon: Shield },
     ]
   }
@@ -98,7 +99,7 @@ export function AdminSidebar({ activeTab, onTabChange }: AdminSidebarProps) {
       <div className="p-6 border-t border-primary/20 space-y-4">
         <div className="flex items-center justify-between px-2">
           <span className="text-[8px] font-black text-muted-foreground uppercase tracking-widest">BUILD_ID: 1204X</span>
-          <span className="text-[8px] font-black text-primary uppercase tracking-widest bg-primary/10 px-2 py-0.5 border border-primary/20">v1.2.0</span>
+          <span className="text-[8px] font-black text-primary uppercase tracking-widest bg-primary/10 px-2 py-0.5 border border-primary/20 animate-pulse">v1.2.0</span>
         </div>
         <Link
           to="/"

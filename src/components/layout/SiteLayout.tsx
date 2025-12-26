@@ -5,6 +5,7 @@ import { Mail, Send, Github, Twitter, Linkedin, ChevronUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
+import { SEO } from '@/components/ui/SEO';
 interface SiteLayoutProps {
   children: React.ReactNode;
 }
@@ -12,20 +13,17 @@ export function SiteLayout({ children }: SiteLayoutProps) {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const { pathname } = useLocation();
   useEffect(() => {
-    const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 400);
-    };
+    const handleScroll = () => setShowScrollTop(window.scrollY > 400);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, [pathname]);
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground selection:bg-primary selection:text-primary-foreground relative">
+      <SEO />
       <div className="noise-overlay" />
       <Navbar />
       <AnimatePresence mode="wait">
@@ -53,28 +51,10 @@ export function SiteLayout({ children }: SiteLayoutProps) {
               </p>
             </div>
             <div className="space-y-6">
-              <h4 className="text-xs font-black uppercase tracking-widest text-primary">İletişim & Sosyal</h4>
-              <ul className="space-y-4">
-                <li>
-                  <a href={`mailto:${siteAyarlari.email}`} className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-3">
-                    <Mail size={16} /> {siteAyarlari.email}
-                  </a>
-                </li>
-                <li className="flex gap-4">
-                  {siteAyarlari.sosyalMedya.map((social) => (
-                    <a
-                      key={social.ad}
-                      href={social.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-muted-foreground hover:text-primary transition-all hover:scale-110"
-                    >
-                      {social.ad === 'GitHub' && <Github size={20} />}
-                      {social.ad === 'Twitter' && <Twitter size={20} />}
-                      {social.ad === 'LinkedIn' && <Linkedin size={20} />}
-                    </a>
-                  ))}
-                </li>
+              <h4 className="text-xs font-black uppercase tracking-widest text-primary">Bağlantılar</h4>
+              <ul className="space-y-2 text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                <li><a href="/robots.txt" className="hover:text-primary">robots.txt</a></li>
+                <li><a href="/sitemap.xml" className="hover:text-primary">sitemap.xml</a></li>
               </ul>
             </div>
             <div className="space-y-6">
@@ -84,7 +64,7 @@ export function SiteLayout({ children }: SiteLayoutProps) {
                    MESAJ GÖNDER <Send size={14} className="group-hover:translate-x-1 transition-transform" />
                 </a>
                 <p className="text-[10px] text-muted-foreground uppercase font-bold mt-4">
-                  © {new Date().getFullYear()} {siteAyarlari.baslik}. TÜM HAKLARI SAKLIDIR.
+                  © {new Date().getFullYear()} {siteAyarlari.baslik}.
                 </p>
               </div>
             </div>
@@ -93,18 +73,8 @@ export function SiteLayout({ children }: SiteLayoutProps) {
       </footer>
       <AnimatePresence>
         {showScrollTop && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            className="fixed bottom-8 right-8 z-[60]"
-          >
-            <Button
-              onClick={scrollToTop}
-              variant="default"
-              size="icon"
-              className="bg-primary hover:bg-primary/90 text-white rounded-none w-12 h-12 shadow-glow animate-float"
-            >
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 20 }} className="fixed bottom-8 right-8 z-[60]">
+            <Button onClick={scrollToTop} variant="default" size="icon" className="bg-primary text-white rounded-none w-12 h-12 shadow-glow animate-float">
               <ChevronUp className="w-6 h-6" />
             </Button>
           </motion.div>
