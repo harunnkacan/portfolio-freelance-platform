@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import { Menu, X, User, LogOut, Shield, Search, Terminal } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -26,9 +26,10 @@ export function Navbar() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchParams] = useSearchParams();
   const location = useLocation();
-  const user = useAuth((s) => s.user);
-  const logout = useAuth((s) => s.logout);
+  // Zustand: Primitive selectors only
+  const userName = useAuth((s) => s.user?.name);
   const isAuthenticated = useAuth((s) => s.isAuthenticated);
+  const logout = useAuth((s) => s.logout);
   const isAdminMode = searchParams.get('mode') === 'admin';
   const isActive = (path: string) => {
     if (path === '/') return location.pathname === '/';
@@ -74,7 +75,7 @@ export function Navbar() {
                     <DropdownMenuTrigger asChild>
                       <Button variant="ghost" size="sm" className="gap-2 text-primary border border-primary/20 rounded-none h-10 px-4">
                         <User size={16} />
-                        <span className="text-[10px] font-black uppercase tracking-widest">{user?.name}</span>
+                        <span className="text-[10px] font-black uppercase tracking-widest">{userName}</span>
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-56 bg-black border-primary/20 text-white rounded-none">
@@ -96,7 +97,7 @@ export function Navbar() {
                   </DropdownMenu>
                 ) : (
                   <Button asChild variant="outline" size="sm" className="border-primary/40 text-primary hover:bg-primary hover:text-white transition-all rounded-none font-black uppercase text-[10px] tracking-widest h-10 px-6">
-                    <Link to="/auth">Giriş</Link>
+                    <Link to="/auth">Giri��</Link>
                   </Button>
                 )}
               </div>
@@ -121,7 +122,7 @@ export function Navbar() {
         </div>
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="md:hidden glass-red border-x-0 border-b border-primary/20 py-4 px-4 space-y-4">
+          <div className="md:hidden bg-black/95 border-b border-primary/20 py-4 px-4 space-y-4">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
