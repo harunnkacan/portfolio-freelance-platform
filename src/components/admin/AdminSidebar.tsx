@@ -2,7 +2,7 @@ import React from 'react';
 import {
   LayoutDashboard, PlusSquare, ShoppingBag, CreditCard,
   Ticket, FileText, FolderTree, MessageSquare,
-  Settings, Brain, Shield, ArrowLeft, Terminal
+  Settings, Brain, Shield, ArrowLeft, Terminal, HardDrive
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Link } from 'react-router-dom';

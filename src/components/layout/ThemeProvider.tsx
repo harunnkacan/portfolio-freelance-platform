@@ -4,13 +4,17 @@ interface ThemeProviderProps {
   children: React.ReactNode;
 }
 export function ThemeProvider({ children }: ThemeProviderProps) {
+  // Zustand: Primitive selector only
   const primaryColor = useSettings(s => s.primaryColor);
   useEffect(() => {
     if (primaryColor) {
-      const hslValue = hexToHsl(primaryColor);
-      document.documentElement.style.setProperty('--primary', hslValue);
-      document.documentElement.style.setProperty('--ring', primaryColor);
-      // Optional: update secondary/accent based on primary color if needed
+      try {
+        const hslValue = hexToHsl(primaryColor);
+        document.documentElement.style.setProperty('--primary', hslValue);
+        document.documentElement.style.setProperty('--ring', primaryColor);
+      } catch (error) {
+        console.error('Failed to update theme variables:', error);
+      }
     }
   }, [primaryColor]);
   return <>{children}</>;
