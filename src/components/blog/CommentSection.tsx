@@ -6,18 +6,26 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
+interface Comment {
+  id: number;
+  user: string;
+  text: string;
+  date: string;
+  likes: number;
+  approved: boolean;
+}
 export function CommentSection() {
-  const [comments, setComments] = useState<any[]>([
-    { id: 1, user: 'Ahmet Y.', text: 'Harika bir yazı olmu��, özellikle compiler kısmına değinmeniz çok iyi.', date: '2 saat önce', likes: 12, approved: true },
+  const [comments, setComments] = useState<Comment[]>([
+    { id: 1, user: 'Ahmet Y.', text: 'Harika bir yazı olmuş, özellikle compiler kısmına değinmeniz çok iyi.', date: '2 saat önce', likes: 12, approved: true },
     { id: 2, user: 'Zeynep K.', text: 'React 19 sabırsızlıkla bekliyoruz.', date: '5 saat önce', likes: 4, approved: true },
   ]);
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
-    const newComment = {
+    const newComment: Comment = {
       id: Date.now(),
-      user: formData.get('name') || 'Misafir',
-      text: formData.get('comment'),
+      user: (formData.get('name') as string) || 'Misafir',
+      text: formData.get('comment') as string,
       date: 'Şimdi',
       likes: 0,
       approved: false

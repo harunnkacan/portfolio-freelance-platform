@@ -4,11 +4,13 @@ import { siteAyarlari } from '@/lib/content';
 import { Mail, Send, Github, Twitter, Linkedin, ChevronUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 interface SiteLayoutProps {
   children: React.ReactNode;
 }
 export function SiteLayout({ children }: SiteLayoutProps) {
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const { pathname } = useLocation();
   useEffect(() => {
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 400);
@@ -22,9 +24,18 @@ export function SiteLayout({ children }: SiteLayoutProps) {
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground selection:bg-primary selection:text-primary-foreground">
       <Navbar />
-      <main className="flex-1 transition-opacity duration-500">
-        {children}
-      </main>
+      <AnimatePresence mode="wait">
+        <motion.main
+          key={pathname}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.3, ease: 'easeOut' }}
+          className="flex-1"
+        >
+          {children}
+        </motion.main>
+      </AnimatePresence>
       <footer className="border-t border-primary/20 bg-black/80 backdrop-blur-md py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">

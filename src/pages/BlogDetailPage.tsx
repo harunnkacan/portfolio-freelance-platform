@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { SiteLayout } from '@/components/layout/SiteLayout';
-import { makaleler } from '@/lib/content';
+import { makaleler, profile } from '@/lib/content';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Clock, Calendar, User, Heart, Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -40,7 +40,7 @@ export function BlogDetailPage() {
                 </Link>
                 <div className="flex items-center gap-4 mb-4">
                   <span className="bg-primary text-white text-[10px] font-black px-4 py-1 uppercase tracking-widest">{post.kategori}</span>
-                  <span className="text-muted-foreground font-mono text-xs">842 Okunma</span>
+                  <span className="text-muted-foreground font-mono text-xs">{post.okunma} Okunma</span>
                 </div>
                 <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter uppercase leading-[0.85] text-glow mb-8">
                   {post.baslik}
@@ -48,7 +48,7 @@ export function BlogDetailPage() {
                 <div className="flex flex-wrap gap-8 text-[10px] font-black text-muted-foreground uppercase tracking-widest">
                   <div className="flex items-center gap-2"><Calendar className="w-4 h-4 text-primary" /> {post.tarih}</div>
                   <div className="flex items-center gap-2"><Clock className="w-4 h-4 text-primary" /> {post.okumaSuresi}</div>
-                  <div className="flex items-center gap-2"><User className="w-4 h-4 text-primary" /> Lumina Editor</div>
+                  <div className="flex items-center gap-2"><User className="w-4 h-4 text-primary" /> {profile.name}</div>
                 </div>
               </motion.div>
             </div>
@@ -99,14 +99,16 @@ export function BlogDetailPage() {
               <div className="glass-red p-8">
                 <h4 className="text-xs font-black uppercase tracking-widest text-primary mb-6">Yazar Hakkında</h4>
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="w-16 h-16 bg-primary rounded-full" />
+                  <div className="w-16 h-16 bg-primary rounded-full overflow-hidden border border-primary/20">
+                    <img src={profile.avatar} alt={profile.name} className="w-full h-full object-cover grayscale" />
+                  </div>
                   <div>
-                    <p className="font-black uppercase tracking-tight">Lumina Team</p>
-                    <p className="text-[10px] text-muted-foreground uppercase">Teknoloji Editörü</p>
+                    <p className="font-black uppercase tracking-tight">{profile.name}</p>
+                    <p className="text-[10px] text-muted-foreground uppercase">{profile.role}</p>
                   </div>
                 </div>
                 <p className="text-sm text-muted-foreground leading-relaxed italic">
-                  Geleceği kodlayanlar için içerik üretiyoruz.
+                  {profile.bio}
                 </p>
               </div>
               <div className="space-y-6">
