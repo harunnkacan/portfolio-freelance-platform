@@ -90,39 +90,45 @@ export default {
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		colors: {
-  			background: 'hsl(var(--background))',
+  			background: '#0a0a0a',
   			foreground: 'hsl(var(--foreground))',
   			muted: {
   				DEFAULT: 'hsl(var(--muted))',
   				foreground: 'hsl(var(--muted-foreground))'
   			},
   			primary: {
-  				DEFAULT: 'hsl(var(--primary))',
-  				foreground: 'hsl(var(--primary-foreground))'
+  				DEFAULT: '#ff1744',
+  				foreground: '#ffffff'
   			},
   			border: 'hsl(var(--border))',
-  			ring: 'hsl(var(--ring))',
+  			ring: '#ff1744',
   			card: {
-  				DEFAULT: 'hsl(var(--card))',
+  				DEFAULT: '#111111',
   				foreground: 'hsl(var(--card-foreground))'
   			},
   			popover: {
-  				DEFAULT: 'hsl(var(--popover))',
+  				DEFAULT: '#111111',
   				foreground: 'hsl(var(--popover-foreground))'
   			},
   			secondary: {
-  				DEFAULT: 'hsl(var(--secondary))',
-  				foreground: 'hsl(var(--secondary-foreground))'
+  				DEFAULT: '#1a1a1a',
+  				foreground: '#ffffff'
   			},
   			accent: {
-  				DEFAULT: 'hsl(var(--accent))',
-  				foreground: 'hsl(var(--accent-foreground))'
+  				DEFAULT: '#ff5252',
+  				foreground: '#ffffff'
   			},
   			destructive: {
   				DEFAULT: 'hsl(var(--destructive))',
   				foreground: 'hsl(var(--destructive-foreground))'
   			},
   			input: 'hsl(var(--input))',
+        cyber: {
+          red: '#ff1744',
+          glow: '#ff5252',
+          dark: '#0a0a0a',
+          card: '#111111'
+        },
   			chart: {
   				'1': 'hsl(var(--chart-1))',
   				'2': 'hsl(var(--chart-2))',
@@ -131,22 +137,23 @@ export default {
   				'5': 'hsl(var(--chart-5))'
   			},
   			sidebar: {
-  				DEFAULT: 'hsl(var(--sidebar-background))',
+  				DEFAULT: '#0a0a0a',
   				foreground: 'hsl(var(--sidebar-foreground))',
-  				primary: 'hsl(var(--sidebar-primary))',
-  				'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-  				accent: 'hsl(var(--sidebar-accent))',
-  				'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
+  				primary: '#ff1744',
+  				'primary-foreground': '#ffffff',
+  				accent: '#1a1a1a',
+  				'accent-foreground': '#ffffff',
   				border: 'hsl(var(--sidebar-border))',
-  				ring: 'hsl(var(--sidebar-ring))'
+  				ring: '#ff1744'
   			}
   		},
   		boxShadow: {
   			soft: '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)',
-  			glow: '0 0 20px -5px rgba(99, 102, 241, 0.4)',
-  			'glow-lg': '0 0 40px -10px rgba(99, 102, 241, 0.3)',
-  			primary: '0 0 20px -5px hsl(var(--primary) / 0.4)',
-  			glass: '0 8px 32px 0 rgba(31, 38, 135, 0.37)'
+  			glow: '0 0 20px -5px rgba(255, 23, 68, 0.4)',
+  			'glow-lg': '0 0 40px -10px rgba(255, 23, 68, 0.3)',
+  			primary: '0 0 20px -5px rgba(255, 23, 68, 0.4)',
+  			glass: '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
+        'cyber-red': '0 0 15px rgba(255, 23, 68, 0.5)'
   		},
   		keyframes: {
   			'fade-in': {
@@ -189,10 +196,10 @@ export default {
   			},
   			glow: {
   				'0%, 100%': {
-  					boxShadow: '0 0 20px -5px rgba(99, 102, 241, 0.4)'
+  					boxShadow: '0 0 20px -5px rgba(255, 23, 68, 0.4)'
   				},
   				'50%': {
-  					boxShadow: '0 0 40px -5px rgba(99, 102, 241, 0.6)'
+  					boxShadow: '0 0 40px -5px rgba(255, 23, 68, 0.6)'
   				}
   			},
   			float: {
@@ -231,9 +238,8 @@ export default {
   			'accordion-up': 'accordion-up 0.2s ease-out'
   		},
   		backgroundImage: {
-  			'gradient-rainbow': 'linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%)',
-  			'gradient-primary': 'linear-gradient(135deg, #667eea, #764ba2)',
-  			'gradient-mesh': 'radial-gradient(at 40% 20%, hsla(28,100%,74%,1) 0px, transparent 50%), radial-gradient(at 80% 0%, hsla(189,100%,56%,1) 0px, transparent 50%), radial-gradient(at 0% 50%, hsla(355,100%,93%,1) 0px, transparent 50%), radial-gradient(at 80% 50%, hsla(340,100%,76%,1) 0px, transparent 50%), radial-gradient(at 0% 100%, hsla(22,100%,77%,1) 0px, transparent 50%), radial-gradient(at 80% 100%, hsla(242,100%,70%,1) 0px, transparent 50%), radial-gradient(at 0% 0%, hsla(343,100%,76%,1) 0px, transparent 50%)'
+  			'gradient-primary': 'linear-gradient(135deg, #ff1744, #ff5252)',
+  			'gradient-cyber': 'radial-gradient(circle at 50% 50%, #1a1a1a 0%, #0a0a0a 100%)'
   		}
   	}
   },
