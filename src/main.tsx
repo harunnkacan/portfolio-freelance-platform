@@ -6,7 +6,7 @@ import { createRoot } from 'react-dom/client'
 import {
   createBrowserRouter,
   RouterProvider,
-  Navigate,
+  Outlet,
 } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
@@ -25,19 +25,31 @@ import { ServicesPage } from '@/pages/ServicesPage'
 import { AboutPage } from '@/pages/AboutPage'
 import { Toaster } from '@/components/ui/sonner'
 import { ThemeProvider } from '@/components/layout/ThemeProvider';
+import { SiteLayout } from '@/components/layout/SiteLayout';
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
-  { path: "/", element: <HomePage />, errorElement: <RouteErrorBoundary /> },
-  { path: "/hakkinda", element: <AboutPage />, errorElement: <RouteErrorBoundary /> },
-  { path: "/blog", element: <BlogPage />, errorElement: <RouteErrorBoundary /> },
-  { path: "/blog/:id", element: <BlogDetailPage />, errorElement: <RouteErrorBoundary /> },
-  { path: "/market", element: <MarketPage />, errorElement: <RouteErrorBoundary /> },
-  { path: "/market/:id", element: <MarketDetailPage />, errorElement: <RouteErrorBoundary /> },
-  { path: "/services", element: <ServicesPage />, errorElement: <RouteErrorBoundary /> },
-  { path: "/contact", element: <ContactPage />, errorElement: <RouteErrorBoundary /> },
-  { path: "/auth", element: <AuthPage />, errorElement: <RouteErrorBoundary /> },
-  { path: "/panel", element: <DashboardPage />, errorElement: <RouteErrorBoundary /> },
-  { path: "/admin", element: <AdminPage />, errorElement: <RouteErrorBoundary /> },
+  {
+    path: "/",
+    element: <SiteLayout />,
+    errorElement: <RouteErrorBoundary />,
+    children: [
+      { index: true, element: <HomePage /> },
+      { path: "hakkinda", element: <AboutPage /> },
+      { path: "blog", element: <BlogPage /> },
+      { path: "blog/:id", element: <BlogDetailPage /> },
+      { path: "market", element: <MarketPage /> },
+      { path: "market/:id", element: <MarketDetailPage /> },
+      { path: "services", element: <ServicesPage /> },
+      { path: "contact", element: <ContactPage /> },
+      { path: "auth", element: <AuthPage /> },
+      { path: "panel", element: <DashboardPage /> },
+    ]
+  },
+  { 
+    path: "/admin", 
+    element: <AdminPage />, 
+    errorElement: <RouteErrorBoundary /> 
+  },
 ]);
 createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

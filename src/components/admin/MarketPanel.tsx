@@ -1,26 +1,47 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { urunler, adminStats } from '@/lib/content';
+import { adminStats } from '@/lib/content';
+import { useContentStore } from '@/lib/content-store';
 import { AdminProductCard } from './AdminProductCard';
 import { OrderList } from './OrderList';
+import { EditorModal } from './EditorModal';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Search, Plus, Filter, TrendingUp, ShoppingBag, Package, ShieldCheck } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useSearchParams } from 'react-router-dom';
+import { toast } from 'sonner';
 export function MarketPanel() {
+  const products = useContentStore(s => s.products);
+  const deleteProduct = useContentStore(s => s.deleteProduct);
   const [searchParams, setSearchParams] = useSearchParams();
   const subTab = searchParams.get('sub') || 'products';
   const [searchTerm, setSearchTerm] = useState('');
+  const [editorOpen, setEditorOpen] = useState(false);
+  const [editId, setEditId] = useState<string | null>(null);
   const stats = [
     { label: 'TOPLAM CİRO', value: adminStats.ciro, icon: TrendingUp, color: 'text-primary' },
     { label: 'SİPARİŞLER', value: '1.240', icon: ShoppingBag, color: 'text-blue-500' },
-    { label: 'AKTİF ÜRÜNLER', value: urunler.length.toString(), icon: Package, color: 'text-emerald-500' },
+    { label: 'AKTİF ÜRÜNLER', value: products.length.toString(), icon: Package, color: 'text-emerald-500' },
     { label: 'SİSTEM DURUMU', value: adminStats.sistemDurumu, icon: ShieldCheck, color: 'text-amber-500' },
   ];
   const handleSubTabChange = (val: string) => {
     setSearchParams({ tab: 'market', sub: val });
+  };
+  const handleAdd = () => {
+    setEditId(null);
+    setEditorOpen(true);
+  };
+  const handleEdit = (id: string) => {
+    setEditId(id);
+    setEditorOpen(true);
+  };
+  const handleDelete = (id: string) => {
+    if(window.confirm("Bu ürünü silmek istediğinize emin misiniz?")) {
+      deleteProduct(id);
+      toast.error("Ürün marketten kaldırıldı.");
+    }
   };
   return (
     <div className="space-y-12">
@@ -49,8 +70,8 @@ export function MarketPanel() {
             <TabsTrigger value="orders" className="flex-1 px-6 rounded-none data-[state=active]:bg-primary font-black uppercase text-[10px] tracking-widest">SİPARİŞ LİSTESİ</TabsTrigger>
             <TabsTrigger value="config" className="flex-1 px-6 rounded-none data-[state=active]:bg-primary font-black uppercase text-[10px] tracking-widest">MAĞAZA AYARLARI</TabsTrigger>
           </TabsList>
-          <Button className="btn-cyber h-14 px-8 text-[10px] font-black uppercase shrink-0">
-            <Plus size={18} className="mr-2" /> YEN�� ÜRÜN EKLE
+          <Button onClick={handleAdd} className="btn-cyber h-14 px-8 text-[10px] font-black uppercase shrink-0">
+            <Plus size={18} className="mr-2" /> YENİ ÜRÜN EKLE
           </Button>
         </div>
         <TabsContent value="products" className="space-y-8 mt-0">
@@ -77,8 +98,8 @@ export function MarketPanel() {
             </Select>
           </div>
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-            {urunler.filter(u => u.ad.toLowerCase().includes(searchTerm.toLowerCase())).map((product) => (
-              <AdminProductCard key={product.id} product={product} />
+            {products.filter(u => u.ad.toLowerCase().includes(searchTerm.toLowerCase())).map((product) => (
+              <AdminProductCard key={product.id} product={product} onEdit={() => handleEdit(product.id)} onDelete={() => handleDelete(product.id)} />
             ))}
           </div>
         </TabsContent>
@@ -92,10 +113,11 @@ export function MarketPanel() {
         </TabsContent>
         <TabsContent value="config" className="mt-0">
           <div className="glass-red p-12 text-center border-dashed border-primary/20">
-            <p className="text-muted-foreground font-mono text-sm uppercase italic">Mağaza yapılandırma ayarları...</p>
+            <p className="text-muted-foreground font-mono text-sm uppercase italic">Mağaza yapıland��rma ayarları...</p>
           </div>
         </TabsContent>
       </Tabs>
+      <EditorModal type="product" isOpen={editorOpen} onClose={() => setEditorOpen(false)} editId={editId} />
     </div>
   );
 }

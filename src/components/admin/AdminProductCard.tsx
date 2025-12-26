@@ -11,8 +11,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 interface AdminProductCardProps {
   product: Urun;
+  onEdit: () => void;
+  onDelete: () => void;
 }
-export function AdminProductCard({ product }: AdminProductCardProps) {
+export function AdminProductCard({ product, onEdit, onDelete }: AdminProductCardProps) {
   return (
     <div className="glass-red border-primary/10 flex items-center p-4 gap-6 group hover:border-primary/40 transition-all">
       <div className="w-24 h-24 shrink-0 bg-black/40 border border-primary/10 overflow-hidden">
@@ -33,10 +35,10 @@ export function AdminProductCard({ product }: AdminProductCardProps) {
         </div>
       </div>
       <div className="flex items-center gap-2">
-        <Button variant="outline" size="sm" className="h-10 border-primary/20 text-primary hover:bg-primary hover:text-white transition-all rounded-none uppercase font-black text-[9px] tracking-widest hidden md:flex">
+        <Button onClick={onEdit} variant="outline" size="sm" className="h-10 border-primary/20 text-primary hover:bg-primary hover:text-white transition-all rounded-none uppercase font-black text-[9px] tracking-widest hidden md:flex">
           <Edit size={14} className="mr-2" /> DÜZENLE
         </Button>
-        <Button variant="ghost" size="icon" className="h-10 w-10 text-muted-foreground hover:text-red-500 hover:bg-red-500/10 rounded-none hidden md:flex">
+        <Button onClick={onDelete} variant="ghost" size="icon" className="h-10 w-10 text-muted-foreground hover:text-red-500 hover:bg-red-500/10 rounded-none hidden md:flex">
           <Trash2 size={16} />
         </Button>
         <DropdownMenu>
@@ -47,8 +49,8 @@ export function AdminProductCard({ product }: AdminProductCardProps) {
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-black border-primary/20 text-white rounded-none min-w-[120px]">
             <DropdownMenuItem className="text-[10px] font-black uppercase py-3 cursor-pointer"><Eye size={14} className="mr-2" /> Görüntüle</DropdownMenuItem>
-            <DropdownMenuItem className="text-[10px] font-black uppercase py-3 cursor-pointer"><Edit size={14} className="mr-2" /> Düzenle</DropdownMenuItem>
-            <DropdownMenuItem className="text-[10px] font-black uppercase py-3 cursor-pointer text-red-500"><Trash2 size={14} className="mr-2" /> Sil</DropdownMenuItem>
+            <DropdownMenuItem onClick={onEdit} className="text-[10px] font-black uppercase py-3 cursor-pointer"><Edit size={14} className="mr-2" /> Düzenle</DropdownMenuItem>
+            <DropdownMenuItem onClick={onDelete} className="text-[10px] font-black uppercase py-3 cursor-pointer text-red-500"><Trash2 size={14} className="mr-2" /> Sil</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

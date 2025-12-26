@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar } from './Navbar';
 import { siteAyarlari } from '@/lib/content';
-import { Mail, Send, Github, Twitter, Linkedin, ChevronUp } from 'lucide-react';
+import { Send, ChevronUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Outlet } from 'react-router-dom';
 import { SEO } from '@/components/ui/SEO';
-interface SiteLayoutProps {
-  children: React.ReactNode;
-}
-export function SiteLayout({ children }: SiteLayoutProps) {
+export function SiteLayout() {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const { pathname } = useLocation();
   useEffect(() => {
@@ -35,7 +32,7 @@ export function SiteLayout({ children }: SiteLayoutProps) {
           transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
           className="flex-1 relative z-10"
         >
-          {children}
+          <Outlet />
         </motion.main>
       </AnimatePresence>
       <footer className="border-t border-primary/20 bg-black/80 backdrop-blur-md py-16 relative z-10">
@@ -47,7 +44,7 @@ export function SiteLayout({ children }: SiteLayoutProps) {
               </span>
               <p className="text-sm text-muted-foreground leading-relaxed max-w-sm font-medium uppercase italic">
                 {siteAyarlari.hakkimda} <br />
-                <span className="text-primary font-black mt-2 block">— Burak Beji</span>
+                <span className="text-primary font-black mt-2 block">��� Burak Beji</span>
               </p>
             </div>
             <div className="space-y-6">

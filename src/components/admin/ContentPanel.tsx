@@ -1,18 +1,24 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { makaleler, kategorilerSidebar } from '@/lib/content';
+import { useContentStore } from '@/lib/content-store';
+import { kategorilerSidebar } from '@/lib/content';
 import { AdminBlogCard } from './AdminBlogCard';
+import { EditorModal } from './EditorModal';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Search, Plus, FileText, Layers, TrendingUp, Eye, MessageSquare, X } from 'lucide-react';
+import { Search, Plus, FileText, Layers, Eye, MessageSquare, X } from 'lucide-react';
 import { toast } from 'sonner';
 export function ContentPanel() {
+  const posts = useContentStore(s => s.posts);
+  const deletePost = useContentStore(s => s.deletePost);
   const [searchTerm, setSearchTerm] = useState('');
   const [showAddCat, setShowAddCat] = useState(false);
   const [newCatName, setNewCatName] = useState('');
+  const [editorOpen, setEditorOpen] = useState(false);
+  const [editId, setEditId] = useState<string | null>(null);
   const stats = [
-    { label: 'TOPLAM MAKALE', value: makaleler.length.toString(), icon: FileText, color: 'text-primary' },
+    { label: 'TOPLAM MAKALE', value: posts.length.toString(), icon: FileText, color: 'text-primary' },
     { label: 'TOPLAM OKUNMA', value: '12.4K', icon: Eye, color: 'text-blue-500' },
     { label: 'YORUMLAR', value: '142', icon: MessageSquare, color: 'text-emerald-500' },
     { label: 'KATEGORİLER', value: kategorilerSidebar.length.toString(), icon: Layers, color: 'text-amber-500' },
@@ -24,10 +30,24 @@ export function ContentPanel() {
     setNewCatName('');
     setShowAddCat(false);
   };
-  const filteredArticles = makaleler.filter(m =>
+  const filteredArticles = posts.filter(m =>
     m.baslik.toLowerCase().includes(searchTerm.toLowerCase()) ||
     m.kategori.toLowerCase().includes(searchTerm.toLowerCase())
   );
+  const handleEdit = (id: string) => {
+    setEditId(id);
+    setEditorOpen(true);
+  };
+  const handleAdd = () => {
+    setEditId(null);
+    setEditorOpen(true);
+  };
+  const handleDelete = (id: string) => {
+    if (window.confirm("Bu makaleyi silmek istediğinize emin misiniz?")) {
+      deletePost(id);
+      toast.error("Makale silindi.");
+    }
+  };
   return (
     <div className="space-y-12">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -47,18 +67,18 @@ export function ContentPanel() {
             <TabsTrigger value="posts" className="flex-1 px-8 rounded-none data-[state=active]:bg-primary font-black uppercase text-[10px] tracking-widest">MAKALELER</TabsTrigger>
             <TabsTrigger value="categories" className="flex-1 px-8 rounded-none data-[state=active]:bg-primary font-black uppercase text-[10px] tracking-widest">KATEGORİLER</TabsTrigger>
           </TabsList>
-          <Button onClick={() => toast.info("Editör yükleniyor...")} className="btn-cyber h-14 px-8 text-[10px] font-black uppercase shrink-0">
+          <Button onClick={handleAdd} className="btn-cyber h-14 px-8 text-[10px] font-black uppercase shrink-0">
             <Plus size={18} className="mr-2" /> YENİ MAKALE EKLE
           </Button>
         </div>
         <TabsContent value="posts" className="space-y-8 mt-0">
           <div className="relative group">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-primary w-5 h-5 transition-transform group-focus-within:scale-110" />
-            <Input placeholder="Makale başlığı veya kategori ara..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="h-14 pl-12 bg-black/40 border-primary/20 rounded-none" />
+            <Input placeholder="Makale başlığı veya kategori ara..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="h-14 pl-12 bg-black/40 border-primary/20 rounded-none focus-visible:ring-primary" />
           </div>
           <div className="grid grid-cols-1 gap-4">
             {filteredArticles.map((post) => (
-              <AdminBlogCard key={post.id} post={post} />
+              <AdminBlogCard key={post.id} post={post} onEdit={() => handleEdit(post.id)} onDelete={() => handleDelete(post.id)} />
             ))}
           </div>
         </TabsContent>
@@ -98,6 +118,7 @@ export function ContentPanel() {
           </div>
         </TabsContent>
       </Tabs>
+      <EditorModal type="post" isOpen={editorOpen} onClose={() => setEditorOpen(false)} editId={editId} />
     </div>
   );
 }
