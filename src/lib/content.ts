@@ -76,6 +76,12 @@ export const siteAyarlari = {
     uye: "5.2K+"
   }
 };
+export const adminStats = {
+  ciro: "42.580 ₺",
+  siparisSayisi: "1.240",
+  sistemDurumu: "%99.9",
+  toplamUrun: "12"
+};
 export const kategorilerSidebar: SidebarCategory[] = [
   { ad: "React", iconName: "Code", isHot: true },
   { ad: "PHP", iconName: "Server", isSecure: true },
@@ -121,78 +127,6 @@ export const makaleler: Makale[] = [
     githubRepo: "laravel/reverb",
     yazar: "Burak Beji",
     okunma: "2.1K"
-  },
-  {
-    id: "m4",
-    baslik: "PHP 8.3 Yeni Özellikleri",
-    kategori: "PHP",
-    ozet: "Typed constants ve dynamic class constant fetch gibi PHP 8.3 ile gelen kritik yenilikler.",
-    icerik: "PHP her geçen gün daha tip-güvenli bir dil haline geliyor. 8.3 sürümü ile gelen typed class constants ve readonly sınıflardaki esneklikler, modern PHP kodunun ne kadar güçlü olabileceğini gösteriyor.",
-    tarih: "08 May 2024",
-    resim: "https://images.unsplash.com/photo-1599507593499-a3f7d7d97667?q=80&w=800&auto=format&fit=crop",
-    okumaSuresi: "6 dk",
-    yazar: "Burak Beji",
-    okunma: "950"
-  },
-  {
-    id: "m5",
-    baslik: "Wordpress Headless Kullanımı",
-    kategori: "Wordpress",
-    ozet: "Wordpress'i backend olarak kullanıp Next.js ile frontend geliştirme süreci.",
-    icerik: "Geleneksel CMS yapısından kurtulup modern bir yapı kurmak mümkün. WP REST API veya GraphQL kullanarak içerikleri çekebilir ve Next.js'in gücüyle inanılmaz hızlı kullanıcı arayüzleri oluşturabilirsiniz.",
-    tarih: "05 May 2024",
-    resim: "https://images.unsplash.com/photo-1614741118887-7a4ee193a5fa?q=80&w=800&auto=format&fit=crop",
-    okumaSuresi: "10 dk",
-    yazar: "Burak Beji",
-    okunma: "830"
-  },
-  {
-    id: "m6",
-    baslik: "Vue 3 Composition API İpuçları",
-    kategori: "Vue",
-    ozet: "Vue 3 ile daha temiz ve sürdürülebilir kod yazmanın incelikleri.",
-    icerik: "Composition API, Vue dünyasında devrim yarattı. Logic decoupling ve script setup kullanımı sayesinde devasa componentleri bile parçalara ayırıp kolayca yönetebiliyoruz.",
-    tarih: "02 May 2024",
-    resim: "https://images.unsplash.com/photo-1618477247222-acbdb0e159b3?q=80&w=800&auto=format&fit=crop",
-    okumaSuresi: "7 dk",
-    yazar: "Burak Beji",
-    okunma: "1.2K"
-  },
-  {
-    id: "m7",
-    baslik: "Temiz Kod Yazma Sanatı",
-    kategori: "Kod",
-    ozet: "Kod karmaşasından kurtulup okunabilirliği artıran temel prensipler.",
-    icerik: "Kod bir kez yazılır ama bin kez okunur. SOLID prensipleri, DRY ve KISS yaklaşımları sadece terim değil, her geliştiricinin hayat felsefesi olmalıdır.",
-    tarih: "01 May 2024",
-    resim: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=800&auto=format&fit=crop",
-    okumaSuresi: "15 dk",
-    yazar: "Burak Beji",
-    okunma: "5.4K"
-  },
-  {
-    id: "m8",
-    baslik: "Full Stack Geliştirici Olmak",
-    kategori: "Kod",
-    ozet: "2024 yılında bir full stack developer yol haritası.",
-    icerik: "Nereden başlamalı ve hangi teknolojilere odaklanmalı? Artık sadece bir dili bilmek yetmiyor, altyapı, deployment ve kullanıcı deneyimi konularında da bilgi sahibi olmak gerekiyor.",
-    tarih: "28 Apr 2024",
-    resim: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=800&auto=format&fit=crop",
-    okumaSuresi: "11 dk",
-    yazar: "Burak Beji",
-    okunma: "4.8K"
-  },
-  {
-    id: "m9",
-    baslik: "Docker ve Microservices",
-    kategori: "Kod",
-    ozet: "Konteyner teknolojisi ile ölçeklenebilir uygulamalar geliştirmek.",
-    icerik: "Docker neden modern yazılımın vazgeçilmezi? Bağımlılık sorunlarını ortadan kaldıran ve environment tutarlılığını sağlayan Docker, mikroservis mimarisinin temel taşıdır.",
-    tarih: "25 Apr 2024",
-    resim: "https://images.unsplash.com/photo-1605745341112-85968b193ef5?q=80&w=800&auto=format&fit=crop",
-    okumaSuresi: "9 dk",
-    yazar: "Burak Beji",
-    okunma: "2.1K"
   }
 ];
 export const urunler: Urun[] = [
@@ -205,6 +139,16 @@ export const urunler: Urun[] = [
     stokDurumu: "Anında Teslimat",
     aciklama: "Modern ve fütüristik web projeleri için tasarlanmış kapsamlı bir UI kiti.",
     ozellikler: ["200+ Komponent", "Figma Dosyası Dahil", "React/Tailwind Desteği", "Koyu Tema Odaklı"]
+  },
+  {
+    id: "u2",
+    ad: "Admin Dashboard Template",
+    fiyat: "1.250 ₺",
+    resim: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop",
+    kategori: "Yazılım",
+    stokDurumu: "Anında Teslimat",
+    aciklama: "Yüksek performanslı ve tamamen özelleştirilebilir yönetim paneli şablonu.",
+    ozellikler: ["Zustand State", "React Query", "Shadcn UI", "Responsive Design"]
   }
 ];
 export const hizmetler: Hizmet[] = [
